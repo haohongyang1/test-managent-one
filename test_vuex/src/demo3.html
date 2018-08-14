@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="changeTemp(1)">1</button>
+    <button @click="changeTemp(2)">2</button>
+    <button @click="changeTemp(3)">3</button>
+    <component :is="nowHeader"></component>
+  </div>
+</body>
+<script type="text/javascript">
+  class Bean {
+    constructor() {
+
+    }
+  }
+  let vm = new Vue({
+    el: "#app",
+    data: {
+      nowHeader: 'header1'
+    },
+    components: {
+      'header1': {
+        template: '<div>组件1</div>'
+      },
+      'header2': {
+        template: '<div>组件2</div>'
+      },
+      'header3': {
+        template: '<div>组件3</div>'
+      }
+    },
+    methods: {
+      // changeTemp: (index) => {
+      //   vm.nowHeader = 'header' + index;
+      //   console.log(this)
+      // }
+      changeTemp(index) {
+        console.log(this)
+        this.nowHeader = 'header' + index
+        console.log(this.nowHeader)
+
+      }
+    }
+  });
+</script>
+
+</html>

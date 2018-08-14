@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-calable=no">
+  <title>手机通讯录</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <style media="screen">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    body {
+      font-size: 22px;
+    }
+
+    #header {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      background: #666666;
+      color: white;
+      text-align: center;
+      position: fixed;
+      /* top: 0px; */
+      /* left: 0px; */
+      z-index: 10;
+
+    }
+
+    #header button {
+      height: 100%;
+      padding: 0 5px;
+    }
+
+    #header button:nth-of-type(1) {
+      float: left;
+    }
+
+    #header button:nth-of-type(2) {
+      float: right;
+    }
+
+    #list {
+      position: relative;
+      top: 40px;
+      overflow: hidden;
+    }
+
+    #list .list_user p {
+      background-color: #ccc;
+      padding-left: 10px;
+    }
+
+    #list .list_user ul li {
+      height: 50px;
+      line-height: 50px;
+      border-bottom: solid 1px #ccc;
+    }
+
+    #list .list_index {
+      position: fixed;
+      right: 10px;
+      top: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="" id="app">
+    <my-header>
+      <button type="button" @touchStart="backBtn" name="returnBtn" slot="return">返回</button>
+      <button type="button" @touchStart="homeBtn " name="homeBtn" slot="home">主页</button>
+    </my-header>
+    <!-- :user-data  是为了在组件的props中定义这个动态属性 -->
+    <my-list :user-data="userData"></my-list>
+  </div>
+</body>
+<script type="text/javascript">
+  let userDataAll = [{
+    "index": 'A',
+    "users": [{
+      "name": 'A',
+      "tel": '13090909999'
+    }, {
+      "name": 'A2',
+      "tel": '13090909999'
+    }, {
+      "name": 'A3',
+      "tel": '13090909999'
+    }]
+  }, {
+    "index": 'B',
+    "users": [{
+      "name": 'B',
+      "tel": '13090909999'
+    }, {
+      "name": 'B2',
+      "tel": '13090909999'
+    }, {
+      "name": 'B3',
+      "tel": '13090909999'
+    }]
+  }, {
+    "index": 'C',
+    "users": [{
+      "name": 'C',
+      "tel": '13090909999'
+    }, {
+      "name": 'C2',
+      "tel": '13090909999'
+    }, {
+      "name": 'C3',
+      "tel": '13090909999'
+    }]
+  }, {
+    "index": 'D',
+    "users": [{
+      "name": 'D',
+      "tel": '13090909999'
+    }, {
+      "name": 'D2',
+      "tel": '13090909999'
+    }, {
+      "name": 'D3',
+      "tel": '13090909999'
+    }]
+  }, {
+    "index": 'E',
+    "users": [{
+      "name": 'E',
+      "tel": '13090909999'
+    }, {
+      "name": 'E2',
+      "tel": '13090909999'
+    }, {
+      "name": 'E3',
+      "tel": '13090909999'
+    }]
+  }, {
+    "index": 'F',
+    "users": [{
+      "name": 'F',
+      "tel": '13090909999'
+    }, {
+      "name": 'F2',
+      "tel": '13090909999'
+    }, {
+      "name": 'F3',
+      "tel": '13090909999'
+    }]
+  }, {
+    "index": 'G',
+    "users": [{
+      "name": 'G',
+      "tel": '13090909999'
+    }, {
+      "name": 'G2',
+      "tel": '13090909999'
+    }, {
+      "name": 'G3',
+      "tel": '13090909999'
+    }]
+  }, ]
+  Vue.component('my-header', {
+    template: `
+    <div class="" id="header" :style="{'postion':'customFixed'?'fixed':'static'}">
+      <slot name="return"></slot>
+        {{customTitle}}
+      <slot name="home"></slot>
+    </div>
+    `,
+
+    props: {
+      'customTitle': {
+        type: String,
+        default: "列表"
+      },
+      'customFixed': {
+        type: Boolean,
+        default: false
+      }
+    }
+  })
+  Vue.component('my-list', {
+    template: `
+    <div id="list">
+      <ul class="list_user" ref="listUser">
+        <li v-for="item in userData">
+          <p>{{item.index}}</p>
+          <ul>
+            <li v-for="user in item.users">{{user.name}}{{user.tel}}</li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="list_index" ref="listIndex">
+        <li @touchstart="setScroll"  v-for="item in userIndex">{{item}}</li>
+      </ul>
+    </div>
+    `,
+
+    props: {
+      'user-data': {
+        type: Array,
+        default: () => []
+      }
+    },
+    computed: {
+      userIndex() {
+        return this.filterIndex(this.userData)
+      }
+    },
+    methods: {
+      filterIndex(data) {
+        let result = [];
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].index) {
+            result.push(data[i].index);
+          }
+        }
+        return result;
+      },
+      setListIndexPos() {
+        var iH = this.$refs.listIndex.offsetHeight;
+        this.$refs.listIndex.style.marginTop = -iH / 2 + 'px';
+      },
+      setScroll(ev) {
+        console.log(ev.target.innerHTML)
+        let aP = this.$refs.listUser.getElementsByTagName('p');
+        for (let i = 0; i < aP.length; i++) {
+          if (aP[i].innerHTML == ev.target.innerHTML) {
+            document.body.scrollTop = aP[i].offsetTop
+          }
+        }
+      }
+    },
+    mounted() {
+      this.setListIndexPos()
+    }
+  });
+  let vm = new Vue({
+    el: "#app",
+    data: {
+      userData: userDataAll
+    },
+    methods: {
+      backBtn: () => {
+        alert("return")
+      },
+      homeBtn: () => {
+        alert("home")
+      }
+    }
+  })
+</script>
+
+</html>

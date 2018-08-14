@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>插槽</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <navigation-link>
+      <tag slot="left"></tag>
+      <tag2 slot="right"></tag2>
+    </navigation-link>
+  </div>
+</body>
+<script type="text/javascript">
+  var vm = new Vue({
+    el: "#app",
+    components: {
+      'navigation-link': {
+        template: `
+          <a class="nav-link"><slot name="left"></slot>文字在前显示<slot name="right"></slot></a>
+        `,
+      },
+      'tag': {
+        template: `
+<span>+++</span>
+        `,
+      },
+      'tag2': {
+        template: `
+<span>---</span>
+        `
+      }
+
+    }
+  });
+</script>
+
+</html>

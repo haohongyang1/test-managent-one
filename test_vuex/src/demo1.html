@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>demo1</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="">
+      {{count}}
+    </div>
+    <my-addbtn></my-addbtn>
+    <my-removebtn></my-removebtn>
+  </div>
+</body>
+<script type="text/javascript">
+  //新建一个仓库
+  let store = new Vuex.Store({
+    state: {
+      count: 0
+    },
+    mutations: {
+      add: (state) => state.count++,
+      remove: (state) => state.count--,
+    }
+  })
+
+  let vm = new Vue({
+    el: "#app",
+    computed: {
+      count: () => store.state.count
+    },
+    components: {
+      'my-addbtn': {
+        template: `
+        <button width="100px" height="100px" @click="setCount">+</button>
+        `,
+        props: ["count"],
+        methods: {
+          setCount: () => store.commit('add')
+        },
+      },
+      'my-removebtn': {
+        template: `
+        <button width="100px" height="100px" @click="removeCount">-</button>
+        `,
+        props: ["count"],
+        methods: {
+          removeCount: () => store.commit('remove')
+        }
+      }
+    }
+  })
+</script>
+
+</html>

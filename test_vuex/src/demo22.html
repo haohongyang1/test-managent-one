@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>snail sort</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  // 题目要求见图片demo22.png
+  // 状态机stateMechanism：现态(statenow)-- xForward/yForward/xBack/yBack/end、
+  // 条件(condition)--isTraverse、动作(action)--、次态(statenext)
+  function snail(array) {
+    var len = array.length
+    for (let i = 0; i < len; i++) {
+      for (let j = 0; j < len; j++) {
+        let p1 = new stateMechanism()
+      }
+    }
+  }
+
+
+
+  function stateMechanism() {}
+  stateMechanism.prototype.statenow = [0, 0] // 当前坐标
+  stateMechanism.prototype.isTraverse = 1 // 是否已经被使用过,1 可用，0 不可用
+  stateMechanism.prototype.action = ['xForward', ''] // 动作
+  stateMechanism.prototype.statenext = function() {
+    // 根据action判断出下一个节点
+    switch (this.action[0]) {
+      case 'xForward':
+        this.statenow[0]++
+        break;
+      case '':
+        this.statenow[0]
+        break;
+      case 'xBack':
+        this.statenow[0]--
+        break;
+    }
+    switch (this.action[1]) {
+      case 'yForward':
+        this.action[1]++
+        break;
+      case '':
+        this.action[1]
+        break;
+      case 'yBack':
+        this.action[1]--
+    }
+    // 根据下一个节点判断出下一个节点的action：
+    // x坐标到达最大时，y开始减少，减少到y最小时，x开始减少，x减少到最小时，y开始减少
+    if (this.statenow[0] < len && this.statenow[1] === 0) {
+      this.action[0] = 'xForward'
+      this.action[1] = ''
+      return
+    }
+    if (this.statenow[0] === len && this.statenow[1] < len) {
+      this.action[0] = ''
+      this.action[1] = 'yForward'
+      return
+    }
+    if (this.statenow[0] === len && this.statenow[1] === len) {
+      this.action[0] = 'xBack'
+      this.action[1] = ''
+      return
+    }
+    if (this.statenow[0] === 0 && this.statenow[1] < len) {
+      this.action[0] = ''
+      this.action[1] = 'yBack'
+      return
+    }
+    // 走过的点，将isTraverse置0
+    this.isTraverse = 0
+  }
+
+  // var obj = {
+  //   statenow: [0, 0],
+  //   isTraverse: 1,
+  //   action: ['xForward', ''],
+  //   statenext: function() {
+  //     // 根据action判断出下一个节点
+  //     switch (this.action[0]) {
+  //       case 'xForward':
+  //         this.statenow[0]++
+  //         break;
+  //       case '':
+  //         this.statenow[0]
+  //         break;
+  //       case 'xBack':
+  //         this.statenow[0]--
+  //         break;
+  //     }
+  //     switch (this.action[1]) {
+  //       case 'yForward':
+  //         this.action[1]++
+  //         break;
+  //       case '':
+  //         this.action[1]
+  //         break;
+  //       case 'yBack':
+  //         this.action[1]--
+  //     }
+  //     // 根据下一个节点判断出下一个节点的action：
+  //     // x坐标到达最大时，y开始减少，减少到y最小时，x开始减少，x减少到最小时，y开始减少
+  //     if (this.statenow[0] < len && this.statenow[1] === 0) {
+  //       this.action[0] = 'xForward'
+  //       this.action[1] = ''
+  //     }
+  //     if (this.statenow[0] === len && this.statenow[1] < len) {
+  //       this.action[0] = ''
+  //       this.action[1] = 'yForward'
+  //     }
+  //     if (this.statenow[0] === len && this.statenow[1] === len) {
+  //       this.action[0] = 'xBack'
+  //       this.action[1] = ''
+  //     }
+  //     if (this.statenow[0] === 0 && this.statenow[1] < len) {
+  //       this.action[0] = ''
+  //       this.action[1] = 'yBack'
+  //     }
+  //     // 走过的点，将isTraverse置0
+  //     this.isTraverse = 0
+  //   }
+  // }
+
+
+
+  // 优质解决方案
+  snail = function(array) {
+    var result;
+    while (array.length) {
+      // Steal the first row.
+      result = (result ? result.concat(array.shift()) : array.shift());
+      // Steal the right items.
+      for (var i = 0; i < array.length; i++)
+        result.push(array[i].pop());
+      // Steal the bottom row.
+      result = result.concat((array.pop() || []).reverse());
+      // Steal the left items.
+      for (var i = array.length - 1; i >= 0; i--)
+        result.push(array[i].shift());
+    }
+    return result;
+  }
+
+  // 可读性强解决方案
+  const snail = function(array) {
+    if (!array || array.length === 0 || array[0].length === 0) return []
+    const ARRAY_SIZE = array.length
+    const STATE_RIGHT = 1
+    const STATE_DOWN = 2
+    const STATE_LEFT = 3
+    const STATE_UP = 4
+
+    // level of limit side
+    let topLevel = 0
+    let rightLevel = 0
+    let bottomLevel = 0
+    let leftLevel = 0
+
+    let x = null
+    let y = null
+
+    let state = STATE_RIGHT
+    let result = []
+
+    const changeState = function() {
+      _changeStateRunner[state]()
+    }
+    const _changeStateRunner = {}
+    _changeStateRunner[STATE_RIGHT] = function() {
+      state = STATE_DOWN;
+      topLevel++
+    }
+    _changeStateRunner[STATE_LEFT] = function() {
+      state = STATE_UP;
+      bottomLevel++
+    }
+    _changeStateRunner[STATE_UP] = function() {
+      state = STATE_RIGHT;
+      leftLevel++
+    }
+    _changeStateRunner[STATE_DOWN] = function() {
+      state = STATE_LEFT;
+      rightLevel++
+    }
+
+    const isExpand = function() {
+      return _expandChecker[state]()
+    }
+    const _expandChecker = {}
+    _expandChecker[STATE_RIGHT] = function() {
+      return ARRAY_SIZE - 1 - y === rightLevel
+    }
+    _expandChecker[STATE_LEFT] = function() {
+      return y === leftLevel
+    }
+    _expandChecker[STATE_UP] = function() {
+      return x === topLevel
+    }
+    _expandChecker[STATE_DOWN] = function() {
+      return ARRAY_SIZE - 1 - x === bottomLevel
+    }
+
+    const walkToNext = function() {
+      // initialization position at first walk
+      if (x === null && y === null) {
+        x = 0;
+        y = 0;
+        return
+      }
+
+      _walkToNextRunner[state]()
+    }
+    const _walkToNextRunner = {}
+    _walkToNextRunner[STATE_RIGHT] = function() {
+      y += 1
+    }
+    _walkToNextRunner[STATE_LEFT] = function() {
+      y -= 1
+    }
+    _walkToNextRunner[STATE_DOWN] = function() {
+      x += 1
+    }
+    _walkToNextRunner[STATE_UP] = function() {
+      x -= 1
+    }
+
+    const walk = function() {
+      isExpand() && changeState()
+
+      walkToNext()
+
+      result.push(array[x][y])
+    }
+
+    const run = function() {
+      for (let count = Math.pow(ARRAY_SIZE, 2); count > 0; count--) {
+        walk()
+      }
+    }
+
+    run()
+
+    return result
+  }
+</script>
+
+</html>

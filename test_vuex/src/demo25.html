@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>vue双向绑定</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<style media="screen">
+</style>
+<script type="text/javascript">
+  // 消息队列实现有两种方式：生产者-消费者模式、发布者-订阅者模式
+  // 双向绑定：发布者-订阅者模式
+  // Object.defineProperty(obj, prop, descriptor)
+
+
+  // 数据劫持原理：
+  let book = {}
+  let name = ''
+  Object.defineProperty(book, 'name', {
+    set(value) {
+      if (book) {
+        name = value
+        console.log('你正在给赋值书名：' + value)
+      }
+    },
+    get() {
+      return '《' + name + '》'
+    }
+  })
+  book.name = '安徒生童话'
+  console.log(book.name)
+
+  // 双向绑定三个思路
+  // 1、Watcher订阅者
+  // 2、Observer监听器
+  // 3、Compile解析器
+  /*paramers:需要监听的obj，obj中的key和obj中的val*/
+  function defineReactive(data, key, val) {
+    observer(val)
+    var dep = new Dep()
+    Object.defineProperty(data, key, {
+      enumerable: true,
+      configurable: true,
+      get: function() {
+        if (Dep.target) { // 判断是否需要订阅者
+          dep.addSubs(Dep.targe)
+        }
+        return val
+      },
+      set: function(newVal) {
+        if (val === newVal) {
+          return
+        }
+        val = newVal
+        console.log('被监听了，你正在更改这个值为：' + newVal)
+        dep.notify() // 通知订阅者
+      }
+    })
+  }
+  /*paramers:需要监听的属性*/
+  function observer(data) {
+    if (!data || typeof data !== 'object') {
+      return;
+    }
+    Object.keys(data).forEach(function(key) {
+      defineReactive(data, key, data[key])
+    })
+  }
+
+  function Dep() {
+    this.subs = []
+  }
+  Dep.prototype = {
+    // 添加订阅者
+    addSubs: function(sub) {
+      this.subs.push(sub)
+    },
+    notify: function() {
+      this.subs.forEach(function(sub) {
+        // 通知订阅者更新
+        sub.update()
+      })
+    }
+  }
+  dep.target = null
+
+
+  function Watcher(vm, exp, cb) {
+    this.vm = vm // 指向selfVUE的作用域
+    this.exp = exp // 绑定属性的key
+    this.cb = cb // 闭包
+    this.value = this.get()
+  }
+  Vatcher.prototype = {
+    update: function() {
+      this.run()
+    },
+    run: function() {
+      var value = this.vm.data[this.exp]
+      var oldVal = this.value
+      if (value !== oldVal) {
+        this.value = value
+        this.cb.call(this.vm, value, oldVal)
+      }
+    },
+    get: function() {
+      Dep.target = this // 缓存自己
+      var value = this.vm.data[this.exp] // 强制执行监听器里面的get函数
+      Dep.target = null // 释放自己
+      return value
+    }
+  }
+</script>
+
+</html>

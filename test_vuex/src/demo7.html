@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>选星</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-stars :star-text="starText" :flag="flag" :envalue-list="envalueList"></my-stars>
+  </div>
+</body>
+<script type="text/javascript">
+  const starCount = [{
+      'isActive': false,
+      'starText': '一颗星',
+    },
+    {
+      'isActive': false,
+      'starText': '二颗星',
+    },
+    {
+      'isActive': false,
+      'starText': '三颗星',
+    },
+    {
+      'isActive': false,
+      'starText': '四颗星',
+    },
+  ]
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      starText: '',
+      flag: false,
+      envalueList: starCount
+    },
+    components: {
+      'my-stars': {
+        data() {
+          return {
+            starTextSon: this.starText,
+            envalueListSon: this.envalueList,
+            flagSon: this.Son
+          }
+        },
+        props: ['starText', 'flag', 'envalueList'],
+        template: `
+        <div>
+          <div class="tri">
+            <span v-for="(item ,index) in envalueListSon" :class="{ lightStar: item.isActive }" @mouseover="starChange(item, index)" @mouseleave="starUnLight(item, index)" @click="starChange1(item, index)">&#9733;</span>
+          </div>
+          <span class="starPage">{{starTextSon}}</span>
+        </div>
+        `,
+        methods: {
+          starChange(item, index) {
+            console.log(item)
+            for (itemValue in this.envalueListSon) {
+              if (itemValue <= index) {
+                this.envalueListSon[itemValue].isActive = true
+              }
+            }
+            console.log(item.starTextSon)
+            this.starTextSon = item.starText
+            item.isActive = true
+          },
+          starUnLight(item, index) {
+            if (this.flagSon == true) {
+              this.flagSon = false
+              return
+            }
+            this.starTextSon = ''
+            this.envalueListSon = starCount
+          },
+          starChange1(item, index) {
+            this.flagSon = true
+            this.starChange(item, index)
+          }
+        }
+      }
+    }
+
+  });
+</script>
+<style>
+  .tri span {
+    font-size: 20px;
+  }
+
+  .grayStar {
+    color: #cdc
+  }
+
+  .lightStar {
+    color: red
+  }
+
+  .starPage {}
+</style>
+
+</html>

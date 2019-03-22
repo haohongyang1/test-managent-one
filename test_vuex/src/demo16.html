@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>数组逻辑合并</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  //  数组合并，要求，arr中增加的要增加在arr1中的指定位置，arr中删除的要合并后删除
+  //  算法的三个问题：增加、删除
+  //
+  //  该算法弊端：1本地默认值不可以更改顺序 2如果当前登录用户在b3环境中更改了其远程值，进入了b4环境，当前本地代码还未更改，b4页面将出现问题 3不能同时增加两个相同名称的
+  // 默认值的数组，会被请求值顶替掉，顺序问题
+  // 模仿默认值
+  // 之前思路，以默认值为基准，只取远程的h值
+  var arr = [{
+      v: 'intention',
+      h: 0
+    },
+    {
+      v: 'intention',
+      h: 0
+    },
+    {
+      v: 'intention33',
+      h: 0
+    },
+    {
+      v: 'afterClass',
+      h: 0
+    },
+    // {
+    //   v: 'afterClassFrom',
+    //   h: 0
+    // },
+    // {
+    //   v: 'afterClassTo',
+    //   h: 0
+    // },
+    // {
+    //   v: 'beforeClass',
+    //   h: 0
+    // }
+    // {
+    //   v: 'beforeClass1',
+    //   h: 0
+    // }
+    // {
+    //   v: 'afterClassTo3',
+    //   h: 0
+    // }
+  ]
+  // 模仿远程值
+  var arr2 = [
+    // {
+    //   v: 'intention',
+    //   h: 0
+    // }
+    // {
+    //   v: 'beforeClass',
+    //   h: 1
+    // },
+    {
+      v: 'afterClass',
+      h: 0
+    }
+  ]
+  //  求两数组差集，返回一个对象，key为元素在传入第三个参数决定取第几个数组中的位置，value为该元素的取值
+  //  参数1：减数，参数2：被减数，参数3：以第几个参数的位置为基准
+  function differenceSet(arr1, arr2) {
+    let obj = {}
+    let isReduct = true // 是否在obj中增加该数据
+    arr1.filter((item, index) => {
+      arr2.some((current2, index2) => {
+        if (item.v === current2.v) {
+          isReduct = false
+          return true
+        }
+      })
+      if (isReduct) {
+        obj[index] = item
+      }
+      isReduct = true
+    })
+    return obj
+  }
+
+  function concatArr4(arrDefault, arrUc) {
+    let o1 = differenceSet(arrDefault, arrUc)
+    let o2 = differenceSet(arrUc, arrDefault)
+    let len1 = Object.keys(o1).length
+    let len2 = Object.keys(o2).length
+    console.log(o1)
+    console.log(o2)
+    if (len1 === 0 && len2 === 0) {
+      return arrUc
+    }
+    // 先减操作，后加操作
+    if (len2 > 0) {
+      let num = 0
+      for (let i = 0; i < arrUc.length + len2; i++) {
+        // debugger
+        for (let j in o2) {
+          if (parseInt(j) === i) {
+            arrUc.splice(i - num, 1)
+            num++
+          }
+        }
+      }
+    }
+    // debugger
+    console.log(arrUc)
+    let numAdd = 0
+    if (len1 > 0) {
+      for (let i = 0; i < arrUc.length + len1; i++) {
+        for (let j in o1) {
+          if (parseInt(j) == i) {
+            debugger
+            arrUc.splice(i, 0, o1[j])
+          }
+        }
+      }
+    }
+    console.log(arrUc)
+    return arrUc
+  }
+  console.log(concatArr4(arr, arr2))
+</script>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>工厂模式</title>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+  // 工厂
+  var shFactory = {};
+  // 流水线
+  shFactory.sh1 = function() {
+    this.sh1 = 1000
+  }
+  shFactory.sh2 = function() {
+    this.sh2 = 2000
+  }
+  // 入口
+  shFactory.leaders = function(num) {
+    return new shFactory[num]()
+  }
+  // 使用者
+  var mySh = shFactory.leaders('sh1');
+  alert(mySh.sh1)
+</script>
+
+</html>

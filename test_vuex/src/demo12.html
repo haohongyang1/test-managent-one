@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>实现Promise</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  const Promise1 = function(resolver) {
+    this._status = 'pending'
+    this._result = ''
+    resolver(this.resolve.bind(this), this.reject.bind(this))
+  }
+  Promise1.prototype = {
+    resolve: function(result) {
+      if (this._status === 'pending') {
+        this._status = 'fullfilled'
+        this._result = result
+      }
+    },
+    reject: function(result) {
+      if (this._status === 'pending') {
+        this._status = 'rejected'
+        this._result = result
+      }
+    },
+    then: function(isResolve, isReject) {
+      if (this._status == 'fullfilled') {
+        var _isPromise = isResolve(this._result)
+        if (_isPromise instanceof Promise1) {
+          return Promise1
+        }
+        return this
+      } else if (this._status == 'rejected' && arguments[1]) {
+        var err = new TypeError(this._result)
+        var _isPromise1 = isReject(err)
+        if (_isPromise1 instanceof Promise1) {
+          return _isPromise1
+        }
+        return this 
+      }
+    },
+    catch: function(isReject) {
+      if (this._status == 'rejected') {
+        var err = new TypeError(this._status)
+        var _isPromise = isReject(err)
+        if (_isPromise instanceof Promise1) {
+          return Promise1
+        }
+        return this
+      }
+    }
+  }
+  var p1 = new Promise1(function(resolve, reject) {
+    let ss
+    reject(ss)
+  }).catch(function(ss) {
+    console.log(ss)
+  })
+  // Promise1.prototype.then(() => {
+  //   // let arr = []
+  //   arr.forEach((item) => {
+  //     console.log(item)
+  //   })
+  //   console.log('aa')
+  // })
+  // let p1 = new Promise((resole, reject) => {
+  //   console.log(resole)
+  //   console.log(reject)
+  // })
+  // let arr = []
+  // p1.then(() => {
+  //     arr.forEach((item) => {
+  //       console.log(item)
+  //     })
+  //   })
+  //   .catch(() => {
+  //     console.log(new Error('数组为空'))
+  //   })
+</script>
+
+</html>

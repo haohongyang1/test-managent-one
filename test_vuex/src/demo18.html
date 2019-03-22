@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>获取两个dom节点最近的父节点</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="div2"></div>
+  <div id="div1">
+    <div id="box">
+      <span id="content1"></span>
+      <div id="content2"></div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+  var div1 = document.getElementById('box')
+  var son1 = document.getElementById('content1')
+  var son2 = document.getElementById('content2')
+
+  function commonParentNode(oNode1, oNode2) {
+    for (; oNode1; oNode1 = oNode1.parentNode) {
+      if (oNode1.contains(oNode2)) {
+        return oNode1
+      }
+    }
+  }
+  console.log(commonParentNode(div1, son1))
+</script>
+
+</html>

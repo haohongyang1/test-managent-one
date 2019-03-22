@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>根据身份证号识别出生日期和年龄</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <input v-model="idCard" />
+    <input v-model="birthday" />
+    <input v-model="age" />
+    <input v-model="sex">
+  </div>
+</body>
+<script type="text/javascript">
+  let vm = new Vue({
+    el: "#app",
+    mounted() {
+      console.log('出生年月')
+      this.birthday = this.getBirthday(this.idCard)
+      console.log(this.birthday)
+      this.age = this.getAge(this.idCard)
+      console.log('性别')
+      this.sex = this.getSex(this.idCard)
+      console.log(this.sex)
+      console.log(this.age)
+    },
+    watch: {
+      'getBirthday': {
+        handler(val) {
+          console.log(val)
+        }
+      }
+    },
+    data: {
+      idCard: '211381199601194578',
+      birthday: '',
+      sex: '',
+      age: ''
+    },
+    methods: {
+      getAge(idCard) {
+        let myDate = new Date()
+        let month = myDate.getMonth() + 1
+        let day = myDate.getDate()
+        let age = myDate.getFullYear() - idCard.substring(6, 10) - 1
+        if (this.idCard.substring(10, 12) < month || idCard.substring(10, 12) == month && idCard.substring(12, 14) <= day) {
+          age++
+        }
+        return age
+      },
+      getBirthday(idCard) {
+        return idCard.substring(6, 10) + "-" + idCard.substring(10, 12) + "-" + idCard.substring(12, 14)
+      },
+      getSex(idCard) {
+        // 2113 8119 9601 1945 48
+        if (parseInt(idCard.substr(16, 1)) % 2 == 1) {
+          return '男'
+        } else {
+          return '女'
+        }
+      }
+    }
+  })
+</script>
+
+</html>

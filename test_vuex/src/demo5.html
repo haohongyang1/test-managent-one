@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-calable=no">
+  <title>自定义标签实现表单输入双向绑定</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="" id="app">
+    <hy-input v-model="Hvalue" :val="Hvalue" v-on:val-change="changeHvalue"></hy-input>
+    <p>{{Hvalue}}</p>
+  </div>
+</body>
+<script type="text/javascript">
+  let vm = new Vue({
+    el: "#app",
+    data: {
+      Hvalue: ''
+    },
+    components: {
+      'hy-input': {
+        template: `<input id="HyIn" type="text" @change="calHyInput"/>`,
+        props: ['val'],
+        methods: {
+          calHyInput: function() {
+            console.log(document.getElementById("HyIn").value)
+            this.$emit('val-change', document.getElementById("HyIn").value)
+          }
+        }
+      }
+    },
+    methods: {
+      changeHvalue: function(val) {
+        vm.Hvalue = val
+      }
+    }
+  });
+</script>
+
+</html>

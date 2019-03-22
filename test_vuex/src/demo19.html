@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>根据包名，在指定空间中创建对象</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="div2"></div>
+  <div id="div1">
+    <div id="box">
+      <span id="content1"></span>
+      <div id="content2"></div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+  var obj = {
+    a: {
+      test: 1,
+      b: 2
+    }
+  }
+  var str = 'a.b.c.d'
+
+  function namespace(oNamespace, sPackage) {
+    var arr = sPackage.split('.');
+    var res = oNamespace; // 保留对原始对象的引用
+
+    for (var i = 0, len = arr.length; i < len; i++) {
+      if (arr[i] in oNamespace) { // 空间名在对象中
+        if (typeof oNamespace[arr[i]] !== "object") { // 为原始值
+          oNamespace[arr[i]] = {}; // 将此属性设为空对象
+        }
+      } else { // 空间名不在对象中，建立此空间名属性，赋值为空
+        oNamespace[arr[i]] = {};
+      }
+
+      oNamespace = oNamespace[arr[i]]; // 将指针指向下一个空间名属性。
+    }
+
+    return res;
+
+  }
+
+  function namespace1(oNamespace, sPackage) {
+    var arr = sPackage.split('.')
+    var res = oNamespace
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] in oNamespace) {
+        if (oNamespace[arr[i]] instanceof Object) {
+          oNamespace[arr[i]] = {}
+        }
+      } else {
+        oNamespace[arr[i]] = {}
+      }
+      // 关键代码在这个位置，向前推进指针
+      oNamespace = oNamespace[arr[i]]
+    }
+    console.log(res)
+    return res
+  }
+  console.log(namespace1(obj, str))
+</script>
+
+</html>

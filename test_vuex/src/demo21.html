@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>The Supermarket Queue</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  // 超市结算队列，计算出结账总时间
+  // queueTime([5, 3, 4], 1)
+  // should return 12
+  // because when n=1, the total time is just the sum of the times
+
+  // queueTime([10, 2, 3, 3], 2)
+  // should return 10
+  // because here n=2 and the 2nd, 3rd, and 4th people in the
+  // queue finish before the 1st person has finished.
+
+  // 将当前客户到最空闲柜台去结账
+  function queueTime(customers, n) {
+    let resultArr = Array(n).fill(0)
+    customers.forEach((item) => {
+      resultArr[resultArr.indexOf(Math.min(...resultArr))] += item
+    })
+    return Math.max(...resultArr)
+  }
+</script>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>两数组去重算法</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  var arr1 = [{
+    'id': '1',
+    'text': '001'
+  }, {
+    'id': '3',
+    'text': '003'
+  }, {
+    'id': '1',
+    'text': '001'
+  }]
+  var arr2 = [{
+    'id': '1',
+    'text': '001'
+  }, {
+    'id': '2',
+    'text': '002'
+  }]
+  // 要求实现合并arr1和arr2，如果id相同时，进行去重
+  arr2.forEach(item2 => {
+    // 当flag为true时，当前可合并
+    let flag = true
+    arr1.forEach(item1 => {
+      if (item1.id === item2.id) {
+        flag = false
+        return false
+      }
+    })
+    // for (let i = 0; i < arr1.length; i++) {
+    //   if (arr1[i].id === item2.id) {
+    //     flag = false
+    //     break
+    //   }
+    // }
+    if (flag) arr1.push(item2)
+
+  })
+  console.log(arr1)
+</script>
+
+</html>

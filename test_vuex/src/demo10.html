@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>demo1</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <my-addbtn></my-addbtn>
+    <my-removebtn></my-removebtn> -->
+  </div>
+</body>
+<!-- //parent start -->
+<template>
+  <div>
+    // class id name style
+    <component-child v-model="value"></component-child>
+    <input type="text">
+  </div>
+</template>
+
+<script type="text/javascript">
+  //新建一个仓库
+  export default {
+    el: "#app",
+    data() {
+      return {
+        name: 'parent name',
+        age: 123,
+        value: 'abc'
+      }
+    }
+    // data
+    // computed
+    // methods
+    // props
+  }
+
+  //view-model
+  //
+  //一. 父子组件通信
+  //1. 父传子 的方式 属性
+  //2. 子传父 的方式 事件
+  //3. 双向绑定的 实现原理 v-model实现原理
+  //4. 自己实现一个双向绑定 <hy-input v-model="value">
+</script>
+<!-- //parent end -->
+
+<!-- //child -->
+<template>
+  <div>
+    <div>{{placeholder}}</div>
+    <div>{{age}}</div>
+  </div>
+</template>
+
+<script type="text/javascript">
+  //新建一个仓库
+  export default {
+    props: ['placeholder', 'age'],
+
+    methods: {}
+  }
+
+  //view-model
+</script>
+
+</html>

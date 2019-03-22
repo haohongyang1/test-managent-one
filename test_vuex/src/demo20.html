@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>统计1-2048数字之间1出现的次数</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="div2"></div>
+  <div id="div1">
+    <div id="box">
+      <span id="content1"></span>
+      <div id="content2"></div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+  // 输入一个开始数字和结束数字，统计某个关键数字出现的次数
+  function statisCount(numFrom, numTo, keyNum) {
+    var count = 0
+    var key = keyNum.toString()
+    var str = ''
+    for (var i = numFrom; i < numTo; i++) {
+      str = i.toString()
+      for (var j = 0; j < str.length; j++) {
+        if (str.charAt(j) === key) {
+          count++c
+        }
+      }
+    }
+  }
+  //  经典算法： persistence(39) === 3 // because 3*9 = 27, 2*7 = 14, 1*4=4 and 4 has only one digit
+
+  const persistence = num => {
+    return `${num}`.length > 1 ? 1 + persistence(`${num}`.split('').reduce((a, b) => a * +b)) : 0;
+  }
+
+  function array_diff(a, b) {
+    return a.filter(function(x) {
+      return b.indexOf(x) == -1;
+    });
+  }
+</script>
+
+</html>

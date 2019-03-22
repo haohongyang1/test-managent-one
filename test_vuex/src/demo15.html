@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>查找数组元素位置</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  let arr = [1, 4, 1, 6, 4]
+
+  function indexOf(arr, item) {
+    var flag = -1
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] === item) {
+        flag = i
+        break
+      }
+    }
+    return flag
+  }
+  console.log(indexOf(arr, 4))
+</script>
+
+</html>

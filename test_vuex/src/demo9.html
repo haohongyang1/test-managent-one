@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>斐波那契数列</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  // 利用for...in实现斐波那契数列
+  function* fibonacci() {
+    let [prev, curr] = [0, 1]
+    for (;;) {
+      yield curr;
+      [prev, curr] = [curr, prev + curr]
+    }
+  }
+  for (let n in fibonacci()) {
+    if (n > 1000) break
+    console.log(n)
+  }
+</script>
+
+</html>

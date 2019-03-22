@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>使用css写一个icon</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <!-- 需要优化 -->
+  <div class="triangle_border">
+    <div class="triangle_border_nw">
+    </div>
+    <div class="triangle_border_ne">
+    </div>
+  </div>
+  <div class="trangle">
+    new
+  </div>
+  <!-- 优化方案 -->
+  <div class="newFlag">
+    NEW
+  </div>
+  <div class="arrow">
+
+  </div>
+  <div class="flag">
+
+  </div>
+</body>
+<style media="screen">
+  * {
+    margin: 0;
+    border: 0;
+  }
+
+  .arrow {
+    width: 0;
+    height: 0;
+    position: relative;
+  }
+
+  .arrow:after,
+  .arrow:before {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-left-color: orange;
+    content: "";
+  }
+
+  .arrow:before {
+    top: 0;
+    left: 70px;
+    border-left-color: #FFF;
+  }
+
+  .newFlag {
+    width: 0;
+    height: 0;
+    border-color: green;
+    border-width: 10px;
+    border: 10px solid transparent;
+    border-left-color: orange; //左箭头
+  }
+
+  /* .newFlag {
+      width: 100px;
+      height: 40px;
+      background-color: green;
+    } */
+
+  .newFlag::before {
+    color: #FFFFFF;
+    font-size: 40px;
+  }
+
+  .triangle_border_ne,
+  .triangle_border_nw,
+  .trangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  .triangle_border_nw {
+    border-width: 30px 0 0 50px;
+    border-color: red transparent transparent transparent;
+  }
+
+  .triangle_border_ne {
+    border-width: 30px 50px 0 0;
+    border-color: transparent red transparent transparent
+  }
+
+  .trangle {
+    border: solid red;
+    display: inline-block;
+    border-width: 30px 50px;
+  }
+
+  .triangle_border {
+    display: inline-block;
+    float: left;
+  }
+
+  .flag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 20px;
+    width: 60px;
+    padding-right: 4px;
+    background-color: red;
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .flag:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    transform: translate(-5px, 0px) rotate(45deg);
+    background-color: white;
+  }
+</style>
+
+</html>

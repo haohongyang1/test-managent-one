@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>myPromise</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  class Promise3 {
+    constructor(executor) {
+      let status = 'pending'
+      let value
+      let reason
+      let onSuccessCallback = []
+      let onErrorCallback = []
+      let resolve = val => {
+        if (this.status == 'pending') {
+          this.value = val
+          this.status = 'fulfilled'
+          this.onSuccessCallback.forEach(fn => fn())
+        }
+      }
+      let reject = reason => {
+        if (this.status == 'pending') {
+          this.reason = reason
+          this.status = 'rejected'
+          this.onErrorCallback.forEach(fn => fn())
+        }
+      }
+      try {
+        executor(resole, reject)
+      } catch (e) {
+        reject(e)
+      }
+    }
+    then(onfulfilled, onRejected) {
+      onfulfilled = typeof onfulfilled === 'function' ? onfulfilled : val => val
+      onRejected = typeof onRejected === 'function' ? onRejected : err => {
+        throw err
+      }
+      let promise4 = new Promise3((resole, reject) => {
+        if (this.status == 'fulfilled') {
+          setTimeout(() => {
+            try {
+              let x = onfulfilled(this.value)
+              resolvePromise(promise4, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            } finally {
+
+            }
+          }, 0)
+        }
+        if (this.status == 'rejected') {
+          setTimeout(() => {
+            try {
+              let x = onRejected(this.reason)
+              resolvePromise(promise4, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            } finally {
+
+            }
+          }, 0)
+        }
+        if (this.status == 'pending') {
+          this.onSuccessCallback.push(() => {
+            setTimeout(() => {
+              try {
+                let x = onfulfilled(this.value)
+                resolvePromise(promise4, x, resolve, reject)
+              } catch (e) {
+                reject(e)
+              } finally {
+
+              }
+            }, 0)
+          })
+          this.onErrorCallback.push(() => {
+            setTimeout(() => {
+              try {
+                let x = onRejected(this.reason)
+                resolvePromise(promise4, x, resolve, reject)
+              } catch (e) {
+                reject(e)
+              } finally {
+
+              }
+            }, 0)
+          })
+        }
+      })
+      return promise4
+    }
+    static resolve(value) {
+      return new Promise2((resolve) => {
+        resolve(value)
+      })
+    }
+    static reject(reason) {
+      return new Promise2((reason) => {
+        reject(reason)
+      })
+    }
+    static all(promises) {
+      return new Promise2((resolve, reject) => {
+        let arr = []
+        let index = 0
+        const saveData = (i, data) => {
+          arr[i] = data
+          if (++i === promises.length) {
+            resolve(arr)
+          }
+        }
+        for (let i = 0; i < promises.length; i++) {
+          promises[i].then(data => {
+            saveData(i, data)
+          }, reject)
+        }
+      })
+    }
+  }
+  let resolvePromise = function(promise4, x, resolve, reject) {
+    if (promise4 === x) {
+      reject(new TypeError('不相等'))
+    }
+    let called
+    if (x != null && typeof x === 'function' || typeof x === 'object') {
+      try {
+        let then = x.then
+        if (typeof then === 'function') {
+          then.call(x, y => {
+            if (called) {
+              return
+            } else {
+              called = true
+            }
+            resolvePromise(promise4, y, resolve, reject)
+          }, r => {
+            if (called) {
+              return
+            } else {
+              called = true
+            }
+            reject(r)
+          })
+        }
+      } catch (e) {
+        if (called) {
+          return
+        } else {
+          called = true
+        }
+        reject(e)
+      } finally {
+
+      }
+    } else {
+      resolve(x)
+    }
+  }
+
+  new Promise3((resolve, reject) => {
+    resolve('111')
+  }).then(data => {
+    console.log(data)
+  })
+
+  // class Promise2 {
+  //   constructor(executor) {
+  //     let status = 'pending'
+  //     let value
+  //     let reason
+  //     let resolve = val => {
+  //       if (this.status == 'pending') {
+  //         this.value = val
+  //         this.status = 'fulfilled'
+  //       }
+  //     }
+  //     let reject = reason => {
+  //       if (this.status == 'pending') {
+  //         this.reason = reason
+  //         this.status = 'rejected'
+  //       }
+  //     }
+  //
+  //     try {
+  //       executor(resolve, reject)
+  //     } catch (e) {
+  //       reject(e)
+  //     }
+  //   }
+  //   then(onfulfilled, onRejected) {
+  //     if (this.status == 'fulfilled') {
+  //       onfulfilled(this.value)
+  //     }
+  //     if (this.status == 'rejected') {
+  //       onRejected(this.reason)
+  //     }
+  //   }
+  // }
+</script>
+
+</html>

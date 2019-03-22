@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>二叉树遍历</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+  // 输入
+  var vNode = {
+    id: 1,
+    name: 'node1',
+    leftChild: {
+      id: 2,
+      name: 'node2',
+      leftChild: {
+        // ......
+        id: 3,
+        name: 'node3',
+        leftChild: '',
+        rightChild: ''
+      },
+      rightChild: {
+        // ......
+        id: 4
+        name: 'node4',
+        leftChild: '',
+        rightChild: ''
+      }
+    },
+    rightChild: ''
+  }
+
+  function nodeTraverse(vNode) {
+    let spaceIcon = ' '
+    if (vNode.leftChild.constructor === Object) {
+      vNode = vNode.leftChild
+      spaceIcon += nodeTraverse(vNode)
+    } else {
+      console.log(spaceIcon + vNode.id)
+      return ' '
+    }
+  }
+</script>
+
+</html>

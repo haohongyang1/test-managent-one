@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>static关键字</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+</body>
+<style media="screen">
+</style>
+<script type="text/javascript">
+  class Animal {
+    static dog() {
+      console.log('animal')
+    }
+
+    static at() {
+      console.log('cat')
+    }
+  }
+  Animal.dog()
+  let a1 = new Animal()
+  a1.dog()
+</script>
+
+</html>

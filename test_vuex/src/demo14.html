@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>选择框范围控制</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<style media="screen">
+  .select_change{
+    width: 100px
+  }
+</style>
+
+<body>
+  <div class="" id="app">
+    <select class="select_change" name="num1" v-model="numPre" @change="numChange('pre')">
+      <option v-for="item in numList" :value="item" :disabled="preDisList[item-1]">{{item}}</option>
+    </select>
+    <select class="select_change" v-model="numNext" name="num2" @change="numChange('next')">
+      <option v-for="item in numList" :value="item" :disabled="nextDisList[item-1]">{{item}}</option>
+    </select>
+    <textarea maxlength="1">
+    </textarea>
+  </div>
+</body>
+<script type="text/javascript">
+  new Vue({
+    el: '#app',
+    mounted() {
+      for (let i = 0; i < this.numList.length; i++) {
+        this.preDisList.push(false)
+        this.nextDisList.push(false)
+      }
+    },
+    data: {
+      numList: [1, 2, 3, 4],
+      preDisList: [],
+      nextDisList: [],
+      numPre: '1',
+      numNext: '1'
+    },
+    methods: {
+      numChange(type) {
+        let len = this.numList.length
+        console.log(len)
+        if (type == 'pre') {
+          for (let i = len - 1; i < parseInt(this.numPre); i--) {
+            nextDisList[i] = true
+          }
+        }
+      }
+    }
+  })
+</script>
+
+</html>

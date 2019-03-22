@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>单例模式</title>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+  var singleton = (function() {
+    var instance;
+
+    function init() {
+      return {
+        publicComeIn: function() {
+          console.log('comeIn')
+        },
+        age: 20
+      }
+    }
+    return {
+      getInstance: function() {
+        if (!instance) {
+          instance = init()
+        }
+        return instance
+      }
+    }
+  })();
+  console.log(singleton.getInstance().publicComeIn())
+</script>
+
+</html>

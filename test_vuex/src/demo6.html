@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>组件实现选择框联动</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <select v-model="selOne">
+      <option v-for="item in selOneList" value="item.id">{{item.text}}</option>
+    </select>
+  </div>
+</body>
+<script>
+  var vm = new Vue({
+    el: "#app",
+    components: {
+      template: ``,
+
+    },
+    data: {
+      selOne: ''
+      selOneList: [{
+        'id': '001',
+        'text': '茄子'
+      }, {
+        'id': '002',
+        'text': '豆角'
+      }]
+    },
+    methods: {
+
+    }
+  })
+</script>
+
+</html>

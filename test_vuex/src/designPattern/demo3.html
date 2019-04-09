@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>装饰者模式</title>
+  <script src="../vuex.js"></script>
+</head>
+
+<body>
+  <div class="box1">
+    <img src="../demo22.png" alt="">
+    <span>1</span>
+  </div>
+  <div class="box2">
+    <span>1</span>
+  </div>
+  <div class="box3">
+    <div class="box3-1">不定宽</div>
+  </div>
+  <div class="box4">
+    <div>定宽</div>
+  </div>
+  <!-- <img src="" alt=""> -->
+</body>
+
+<script type="text/javascript">
+// 装饰者模式：重复出现某些代码，可以使用装饰器模式
+/* 不破坏程序主体，做装饰 */
+function Person() {
+  this.age = 18
+  this.name = 'tang'
+}
+// ES6装饰者模式
+class Teacher () {
+  lesson () {
+    console.log("teacher teach lesson")
+  }
+}
+
+
+
+// ES7装饰者模式
+function Teacher(target) {
+  target.isTarget = true
+}
+@Teacher
+class Decorator {
+
+}
+console.log(Decorator.isTarget)
+</script>
+</html>

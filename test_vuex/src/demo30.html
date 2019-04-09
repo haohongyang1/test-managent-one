@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>调整顺序</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="https://browser.sentry-cdn.com/5.0.5/bundle.min.js" crossorigin="anonymous"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+</head>
+<body>
+<article id="demo" class="container">
+  <div class="cell">自定义扣款顺序</div>
+  <div class="cell hint">系统将按照下面排序的顺序扣款</div>
+  <div class="cell" v-for="(item, index) in withholdList">
+    <span>{{item.name}}</span>
+    <div class="icon-box">
+        <i class="turn-top" @click="turnTop(index)"></i>
+        <i class="turn-bottom" @click="turnBottom(index)"></i>
+    </div>
+  </div>
+</article>  
+</body>
+<script>
+  Sentry.init({ dsn: 'https://4a4bbaf894d3442d86779708c8dd678e@sentry.io/1433373' });
+
+  const HINT = [
+    {code: 'ACCOUNT', name: '账户余额'},
+    {code: 'CARD', name: '银行卡'},
+    {code: 'SPEND', name: '花呗'},
+    {code: 'POINTS', name: '集分宝'}
+  ]
+  let vm = new Vue({
+    el: '#demo',
+    data: {
+      withholdList: JSON.parse(JSON.stringify(HINT))
+    },
+    methods: {
+      turnTop(index) {
+        this.withholdList = this.arrayEleOrderChange(1, index, 'forward', this.withholdList)
+      },
+      turnBottom(index) {
+        this.withholdList = this.arrayEleOrderChange(1, index, 'backward', this.withholdList)
+      },
+      // 数组元素顺序调整算法
+      // step:n;调整几个、index:n;调整第几个、type:forward/backward;向前/向后、oldArray:
+      arrayEleOrderChange(step, index, type, oldArray) {
+        if (!(oldArray instanceof Array)) return []
+        if (step > oldArray.length || index > oldArray.length) return []
+        let newArr = JSON.parse(JSON.stringify(oldArray))
+        // 将arr的index元素删除并返回
+        let item = newArr.splice(index, 1)
+        // 将返回元素增加到数组中
+        newArr.splice(type === 'forward' ? index - step : index + step, 0, item[0])
+        return newArr
+      }
+    }
+  })
+</script>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #cdcdcd;
+  }
+  .cell{
+    height: 30px;
+    line-height: 30px;
+    color: #2b1216;
+    font-size: 16px;
+    padding: 10px;
+    background: #FFFFFF;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .hint{
+    color: black;
+    font-size: 10px;
+    background: #cdcdcd;
+    height: 13px;
+    line-break: 13px;
+    margin-top: 0;
+  }
+  .icon-box{
+    display: none;
+  }
+  .turn-top{
+    width: 25px;
+    height: 25px;
+    background-image: url('./img/turnTop.svg');
+    background-size: 25px 25px;
+  }
+  .turn-bottom{
+    width: 25px;
+    height: 25px;
+    background-image: url('./img/turnBottom.svg');
+    background-size: 25px 25px;    
+  }
+  .cell:hover .icon-box{
+    display: flex;
+  }
+  
+</style>
+</html>

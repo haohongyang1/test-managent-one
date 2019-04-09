@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<!-- 
+  前言总结：
+  1、@keyframes:动画规则，通过控制关键帧的样式来控制动画序列的中间步骤
+  
+  2、animation属性：
+  animation-name:【绑定的keyframes名称】
+  animation-delay:【默认：0，延时什么时候开始】
+  animation-duration:【动画持续多长时间】
+  🙆animation-timing-function:【规定速度曲线，默认ease、linear、ease-in、ease-out、ease-in-out、cubic-bezier(n,n,n,n)】
+  animation-fill-mode:【当动画不播放时，要应用到元素的样式】
+  animation-iteration-count:【规定动画被播放的次数，默认1、infinite永远、n】
+  animation-play-state:【规定动画是否正在运行或暂停，paused、running】
+
+  3、transform属性：对元素进行2D3D转换即旋转、缩放、倾斜、移动
+  translate(x,y):【2D转换即平移，x,y:距离单位】
+  scale(x,y):【2D缩放】
+  rotate(angle):【旋转角度】
+
+ -->
+
+<head>
+  <meta charset="utf-8">
+  <title>CSS3动画</title>
+  <script src="../vuex.js"></script>
+</head>
+<body>
+  <div class="animate-test linear">linear</div>
+  <div class="animate-test ease">ease</div>
+  <div class="animate-test ease-in">ease-in</div>
+  <div class="animate-test ease-out">ease-out</div>
+  <div class="animate-test ease-in-out">ease-in-out</div>
+  <div class="animate-test cubic-bezier">cubic-bezier</div>
+  
+  <div class="translate-test">translate</div>
+</body>
+<style>
+  .animate-test{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #f1939c;
+    color: #ffffff;
+    text-align: center;
+    line-height: 100px;
+  }
+  /* 定义规则起名字 */
+  @keyframes testFirst{
+    from {background-color: #f1939c;left: 0;top: 0;}
+    to {background-color: #ed556a;left: 500px;top: 100px;}
+  }
+  /* 将定义好的动画规则绑定在选择器上 */
+  .animate-test{
+    animation-name: testFirst;
+    animation-delay: 1s;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+  .ease{
+    animation-timing-function: ease;
+  }
+  .ease-in{
+    animation-timing-function: ease-in;
+  }
+  .ease-out{
+    animation-timing-function: ease-out;
+  }
+  .ease-in-out{
+    animation-timing-function: ease-in-out;
+  }
+  .cubic-bezier{
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .translate-test{
+    width: 100px;
+    height: 100px;
+    background: greenyellow;
+    position: absolute;
+    top: 200px;
+    transform: translate3d(10px,10px,10px)
+  }
+</style>
+</html>

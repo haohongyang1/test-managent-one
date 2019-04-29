@@ -21,12 +21,14 @@
       </div>
     </div>
     <div class="right-area">
+      <!-- 判断右侧区域显示内容还是显示选中文件夹 -->
       <div v-if="true">
         <!-- {{dataList[iSelectedNum].content}} -->
       </div>
       <div v-if="true">
-        <div v-for="item in aSelectedDataList">
-          
+        <!-- 选中文件夹内容 -->
+        <div v-for="item in aSelectedDataList" class="folder-cell">
+          <div></div>
         </div>
       </div>
     </div>

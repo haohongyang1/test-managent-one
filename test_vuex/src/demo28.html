@@ -7,68 +7,92 @@
 </head>
 
 <body>
-  <div class="box1">
-    <img src="../demo22.png" alt="">
-    <span>1</span>
+  <!-- 子元素主动居中 -->
+    <!-- 行内 -->
+  <div class="parent">
+    <span class="child inline-center-child">子元素-行内</span>
   </div>
-  <div class="box2">
-    <span>1</span>
+    <!-- 块级 -->
+  <div class="parent">
+    <div class="child block-center-child">子元素-块级</div>
   </div>
-  <div class="box3">
-    <div class="box3-1">不定宽</div>
+  <!-- 父元素主动居中 -->
+    <!-- 行内 -->
+  <div class="parent inline-center-parent">
+    <span class="child">父元素-行内</span>
   </div>
-  <div class="box4">
-    <div>定宽</div>
+    <!-- 块级 -->
+  <div class="parent block-center-parent">
+    <div class="child">父元素-块级</div>
   </div>
-  <!-- <img src="" alt=""> -->
 </body>
 <style>
-  html{
-    text-align: center;
-  }
   *{
     margin: 0;
     padding: 0;
   }
-  .box1{
+  /*元素初始化*/
+  .parent{
     display: inline-block;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-    background-color: red;
-    vertical-align: top;
-  }
-  .box2{
-    display: inline-block;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-    background-color: aquamarine;
-  }
-  .box1 img{
-    width: 50px;
-    height: 50px;
-    vertical-align: middle;
-  }
-
-  .box3, .box4{
+    background: #eeb8c3;
     width: 200px;
     height: 200px;
-    background-color: olivedrab;
+    margin-right: 10px; 
   }
-  .box3 .box3-1{
-    background-color: bisque;
+  .child{
+    background: #ee4866;
+    width: 70px;
+    height: 70px;
   }
-  .box4{
-    background-color: brown;
+  /*居中代码*/
+
+  .inline-center-child{
   }
-  .box4 div{
-    width: 100px;
-    height: 100px;
-    background-color: blue;
+
+
+  .block-center-child{
+    /* case1 */
     margin: 0 auto;
+    
+    /* case2 */
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    /* case3 */
+    position: relative;
+    top: 50%;
+    margin-top: -50px;
   }
-  .box3::before{}
+
+  .inline-center-parent{
+    /* case1 */
+    text-align: center;
+
+    /* case2 */
+    display: table-cell;
+    vertical-align: middle;
+
+    /* case3 */
+    line-height: 200px;
+  }
+  /* case4 */
+  .inline-center-parent::before{
+    display: inline-block;
+    content: '';
+    height: 100%;
+    vertical-align: middle;
+  }
+  .block-center-parent{
+  }
+  /* 万能-flex布局 */
+  .parent{
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 </style>
 <script type="text/javascript">
 </script>

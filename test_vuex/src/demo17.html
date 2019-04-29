@@ -50,6 +50,19 @@
     }
   }
   let urlParames(str1, 'key')
+  
+  function getQueryBeforeHash(hash) {
+      let i = hash.indexOf('?')
+      if (i !== -1){
+        let arr = hash.slice(i+1).split('&')
+        let obj = {}
+        arr.forEach(item => {
+          obj[item.split('=')[0]] = item.split('=')[1]
+        })
+        return obj
+      }
+      return {}
+  }
 </script>
 
 </html>

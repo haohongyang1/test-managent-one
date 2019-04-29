@@ -14,10 +14,9 @@
   animation-play-state:【规定动画是否正在运行或暂停，paused、running】
 
   3、transform属性：对元素进行2D3D转换即旋转、缩放、倾斜、移动
-  translate(x,y):【2D转换即平移，x,y:距离单位】
-  scale(x,y):【2D缩放】
-  rotate(angle):【旋转角度】
-
+  transform: translate(x,y):【2D转换即平移，x,y:距离单位】、scale(x,y):【2D缩放】、rotate(angle):【旋转角度】
+  transform-origin: x y z:
+  transform-style: 【表示字元素怎样在三维空间内呈现flat:2D平面、preserve-3d:3D空间】
  -->
 
 <head>
@@ -33,7 +32,10 @@
   <div class="animate-test ease-in-out">ease-in-out</div>
   <div class="animate-test cubic-bezier">cubic-bezier</div>
   
+  <div class="basis-point"></div>
   <div class="translate-test">translate</div>
+
+  <div class="rotate-ball"></div>
 </body>
 <style>
   .animate-test{
@@ -81,7 +83,37 @@
     background: greenyellow;
     position: absolute;
     top: 200px;
-    transform: translate3d(10px,10px,10px)
+    transform: rotate(-30deg);
+  }
+
+  .basis-point {
+    width: 10px;
+    height: 10px;
+    background: #000000;
+    border-radius: 50%;
+    position: absolute;
+    top: 200px;
+    left: 500px;
+  }
+  @keyframes rotate {
+    100% {
+      transform: rotate(-360deg)
+    }
+  }
+  .rotate-ball{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: aquamarine;
+    animation-name: rotate;
+    animation-delay: 1s;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transform-origin: 150px 100px;
+    position: absolute;
+    top: 100px;
+    left: 350px;
   }
 </style>
 </html>

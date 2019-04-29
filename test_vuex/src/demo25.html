@@ -35,7 +35,7 @@
   book.name = '安徒生童话'
   console.log(book.name)
 
-  // 双向绑定三个思路
+  // 双向绑定
   // 1、Watcher订阅者
   // 2、Observer监听器
   // 3、Compile解析器
@@ -87,7 +87,7 @@
       })
     }
   }
-  dep.target = null
+  Dep.target = null
 
 
   function Watcher(vm, exp, cb) {
@@ -96,7 +96,7 @@
     this.cb = cb // 闭包
     this.value = this.get()
   }
-  Vatcher.prototype = {
+  Watcher.prototype = {
     update: function() {
       this.run()
     },
@@ -115,6 +115,10 @@
       return value
     }
   }
+  let d1 = {a:'a'}
+  observer(d1)
+  console.log(d1)
+  d1.a = 'b'
 </script>
 
 </html>

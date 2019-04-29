@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -51,4 +52,104 @@
 </style>
 <script type="text/javascript">
 </script>
+=======
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>居中方式</title>
+  <script src="../vuex.js"></script>
+</head>
+
+<body>
+  <!-- 子元素主动居中 -->
+    <!-- 行内 -->
+  <div class="parent">
+    <span class="child inline-center-child">子元素-行内</span>
+  </div>
+    <!-- 块级 -->
+  <div class="parent">
+    <div class="child block-center-child">子元素-块级</div>
+  </div>
+  <!-- 父元素主动居中 -->
+    <!-- 行内 -->
+  <div class="parent inline-center-parent">
+    <span class="child">父元素-行内</span>
+  </div>
+    <!-- 块级 -->
+  <div class="parent block-center-parent">
+    <div class="child">父元素-块级</div>
+  </div>
+</body>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  /*元素初始化*/
+  .parent{
+    display: inline-block;
+    background: #eeb8c3;
+    width: 200px;
+    height: 200px;
+    margin-right: 10px; 
+  }
+  .child{
+    background: #ee4866;
+    width: 70px;
+    height: 70px;
+  }
+  /*居中代码*/
+
+  .inline-center-child{
+  }
+
+
+  .block-center-child{
+    /* case1 */
+    margin: 0 auto;
+    
+    /* case2 */
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    /* case3 */
+    position: relative;
+    top: 50%;
+    margin-top: -50px;
+  }
+
+  .inline-center-parent{
+    /* case1 */
+    text-align: center;
+
+    /* case2 */
+    display: table-cell;
+    vertical-align: middle;
+
+    /* case3 */
+    line-height: 200px;
+  }
+  /* case4 */
+  .inline-center-parent::before{
+    display: inline-block;
+    content: '';
+    height: 100%;
+    vertical-align: middle;
+  }
+  .block-center-parent{
+  }
+  /* 万能-flex布局 */
+  .parent{
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+<script type="text/javascript">
+</script>
+>>>>>>> d606445a18df7a43d16b99e40520beedd56acf50
 </html>

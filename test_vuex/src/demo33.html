@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ws</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+</body>
+<script>
+
+
+const wsUrlMap = {
+    'online': '',
+    'stage': 'ws://stable-uc-wmps.vipkid-qa.com.cn/websocket/ws'
+}
+const socket = new WebSocket(wsUrlMap['stage']);
+socket.addEventListener('open', function(event){
+    // todo 明确这里面的每个参数语义，并形成wiki
+	var subjectList = new Array();
+    var subject = new Object();
+	subject.wsType = 'WB_DT';
+	subject.wsSubjectId = '15462154';
+	subjectList.push(subject);
+	var wsMsg = new Object();
+        wsMsg.msgId = 'qqqqqqqqqqqqqqq';
+        wsMsg.msgType = 'reSubscribe';
+        wsMsg.content = subjectList;
+        wsMsg.sendTime = new Date().getTime();
+        wsMsg.sys = false;
+    socket.send(JSON.stringify(wsMsg));
+    console.log('WebSocket opened.')
+})
+
+// socket.addEventListener('open', function(event){
+//     // todo 明确这里面的每个参数语义，并形成wiki
+//     let  binData = {
+//         content:[{
+//             wsType:'WB_DT',
+//             wsSubjectId:'15462154'
+//         }],
+//         msgId:'qqqqqqqqqqqqqqq',
+//         msgType:'reSubscribe',
+//         sendTime:'WB_DT',
+//         sys:false};
+//     socket.send(JSON.stringify(binData));
+//     console.log('WebSocket opened.')
+// })
+
+socket.addEventListener('message', function(event){
+    // todo 明确返回数据的数据格式
+    // todo 并且作出判断，如果不符合，那么也不至于报错
+    alert(event.data)
+})
+setInterval(() => {
+  socket.send("ping")
+}, 1000)
+socket.addEventListener('close', function() {
+    alert('WebSocket closed.')
+})
+</script>
+</html>

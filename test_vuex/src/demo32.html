@@ -25,10 +25,12 @@
       <div v-if="true">
         <!-- {{dataList[iSelectedNum].content}} -->
       </div>
-      <div v-if="true">
+      <div v-if="true" class="folder-container">
         <!-- 选中文件夹内容 -->
-        <div v-for="item in aSelectedDataList" class="folder-cell">
-          <div></div>
+        <div v-for="(item, index) in aSelectedDataList" :class="{ 'folder-cell':true, 'transform-cell': index === 1}">
+          <span class="folder-title">{{item.title}}</span>
+          <span class="folder-date">{{item.date}}</span>
+          <span class="folder-img"></span>  
         </div>
       </div>
     </div>
@@ -42,7 +44,10 @@
         {title: '我的笔记1', content: '学习笔记', date: '2019-04-01', bSelected: false}
       ],
       iSelectedNum: 0,
-      aSelectedDataList: [{title: '我的笔记', date: '2019-0401'}]
+      aSelectedDataList: [
+        {title: '我的笔记', date: '2019-0401'},
+        {title: '我的笔记', date: '2019-0401'}
+      ]
     }
   })
 </script>
@@ -79,7 +84,7 @@
     color: rgb(50, 50, 50);
     font-size: 18px;
   }
-  .column-cell .menu-title i{
+  .column-cell .menu-title i, .right-area .folder-cell .folder-img{
     display: inline-block;
     width: 20px;
     height: 20px;
@@ -91,10 +96,43 @@
     width: 80%;
     height: 100%;
     overflow-y: hidden;
+    border: solid 1px rgb(217, 218, 223);
+  }
+  .folder-container{
+    margin-top: 90px;
   }
   .column-cell{
     height: 80px;
     border: solid 1px rgb(217, 218, 223);
+  }
+  .folder-cell{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 200px;
+    height: 300px;
+    background: #FFFFFF;
+    border: solid 1px rgb(217, 218, 223);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .right-area .folder-cell .folder-img{
+    background-repeat: no-repeat;
+    background-size: 100px 100px;
+    width: 100px;
+    height: 200px;
+    margin: 0 auto;
+  }
+
+  /* 效果变换 */
+  .folder-cell{
+    /* transform-origin: 100px 100px; */
+    transform: rotate(30deg);
+  }
+  .transform-cell{
+    transform-origin: 0 10px;
   }
 </style>
 </html>

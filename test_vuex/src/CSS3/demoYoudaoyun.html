@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>CSS3-模拟有道云笔记选中文件特效</title>
+  <script src="../vuex.js"></script>
+  <script type="text/javascript" src="../../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="left-area">
+        <!-- v-bind:class='{ column-cell:true, }' -->
+      <div v-for="(item, index) in dataList" :class="{ 'column-cell':true, selected: item.bSelected }" @click="selectItem(index)">
+        <span class="menu-title">
+          <i></i>
+          {{item.title}}
+        </span>
+        <span class="menu-content">{{item.content}}</span>
+        <span class="menu-date">{{item.date}}</span>
+      </div>
+    </div>
+    <div class="right-area">
+      <!-- 判断右侧区域显示内容还是显示选中文件夹 -->
+      <div v-if="true">
+        <!-- {{dataList[iSelectedNum].content}} -->
+      </div>
+      <div v-if="true" class="folder-container">
+        <!-- 选中文件夹内容   -->
+        <div v-for="(item, index) in aSelectedDataList" :style="item.rotateSty" :class="{ 'folder-cell':true, 'transform-cell': true, 'animation-cell': true }">
+          <span class="folder-title">{{item.title}}</span>
+          <span class="folder-date">{{item.date}}</span>
+          <span class="folder-img"></span>  
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  // 检测是否支持CSS变量
+  const isSupported =
+  window.CSS &&
+  window.CSS.supports &&
+  window.CSS.supports('--a', 0);
+  var app = new Vue({
+    el: '#app',
+    mounted() {
+    },
+    data: {
+      dataList: [
+        {title: '我的笔记1', content: '学习笔记', date: '2019-04-01', bSelected: false},
+        {title: '我的笔记1', content: '学习笔记', date: '2019-04-01', bSelected: false},
+        {title: '我的笔记1', content: '学习笔记', date: '2019-04-01', bSelected: false}
+      ],
+      iSelectedNum: 0,
+      aSelectedDataList: []
+    },
+    methods: {
+      selectItem: function (index){
+        // 想做一个键盘监听command按键
+
+        // window.document.onkeydown = function (e) {
+        //   var keycode = e.keyCode;
+        //   if (keycode == 13) {
+        //     alert(index)
+        //   }
+        // }
+        if (this.dataList[index].bSelected) {
+          this.dataList[index].bSelected = !this.dataList[index].bSelected
+          return
+        } else {
+          this.dataList[index].bSelected = !this.dataList[index].bSelected
+        }
+        let len = this.aSelectedDataList.length
+        let oSelectedItem = JSON.parse(JSON.stringify(this.dataList[index]))
+        
+        // TODO：写一个算法动态根据len来计算角度大小
+        switch (len) {
+          case 0:
+            oSelectedItem.rotate = 0
+            break
+          case 1:
+            oSelectedItem.rotate = '-30deg'
+            break
+          case 2:
+            oSelectedItem.rotate = '30deg'
+            break
+        }
+        document.body.style.setProperty('--rotate', oSelectedItem.rotate);
+        oSelectedItem.rotateSty = 'transform: rotate(' + oSelectedItem.rotate + ');'
+        this.aSelectedDataList.push(oSelectedItem)
+      }
+    }
+  })
+</script>
+<style>
+  /* 页面样式调整 */
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    --rotate: 30;
+  }
+  #app{
+    width: 1031px;
+    height: 500px;
+    border: solid 1px rgb(217, 218, 223);
+    margin: 0 auto;
+    display: flex;
+  }
+  .selected{
+    background: rgb(242, 242, 246)
+  }
+  .left-area{
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .column-cell{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 5px 0;
+  }
+  .column-cell .menu-title{
+    color: rgb(50, 50, 50);
+    font-size: 18px;
+  }
+  .folder-cell{
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    width: 200px;
+    height: 300px;
+    background: #FFFFFF;
+    border: solid 1px rgb(217, 218, 223);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+  }
+  .column-cell .menu-title i, .right-area .folder-cell .folder-img{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url('../img/notebook.png');
+    background-size: 20px 20px;
+  }
+  .right-area{
+    display: inline-block;
+    width: 80%;
+    height: 100%;
+    overflow-y: hidden;
+    border: solid 1px rgb(217, 218, 223);
+  }
+  .folder-container{
+    margin-top: 90px;
+  }
+  .column-cell{
+    height: 80px;
+    border: solid 1px rgb(217, 218, 223);
+  }
+  .right-area .folder-cell .folder-img{
+    background-repeat: no-repeat;
+    background-size: 100px 100px;
+    width: 100px;
+    height: 200px;
+    margin: 0 auto;
+  }
+
+  /* 效果变换 */
+  @keyframes folderRight{
+    from {
+      left: 15%;
+      top: 5%;
+      transform: scale(0.5);
+      display: block;
+    }
+    to {
+      left: 50%;
+      transform: scale(1);
+      transform: rotate(var(--rotate));
+      display: block;
+    }
+  }
+
+  .transform-cell{
+    transform-origin: 100px 300px;
+    /* transform: rotate(30deg); */
+    transform: rotate(var(--rotate));
+  }
+  .animation-cell{
+    animation-name: folderRight;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+  }
+</style>
+</html>

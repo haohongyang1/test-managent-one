@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>模拟小人行走特效</title>
+</head>
+<body>
+  <div id="app">
+    <button onclick="pause(1)">停止</button>
+    <button onclick="pause(2)">开始</button>
+    <div class="water-ripple-outer">
+      <div class="water-ripple-middle">
+        <div class="water-ripple-inner"></div>
+      </div>
+    </div>
+    <div class="end water-ripple-outer">
+        <div class="water-ripple-middle">
+          <div class="water-ripple-inner"></div>
+        </div>
+    </div>
+    <img id="peopleImg" src="../img/goEating.gif" class="little-people">
+  </div>
+</body>
+<script>
+  var peopleImgEle = document.getElementById('peopleImg')
+function pause(type) {
+  peopleImgEle.style.webkitAnimationPlayState = type === 1 ? 'paused' : 'running'
+}
+</script>
+<style>
+
+#app{
+  width: 100%;
+  height: 100vh;
+  background-image: url('../img/mapBg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.water-ripple-outer, .water-ripple-middle, .water-ripple-inner{
+  position: absolute;
+  border-radius: 50%;
+  border: solid 2px #1A3C78;
+}
+#app .water-ripple-inner{
+  top: 8px;
+  left: 8px;
+  width: 10px;
+  height: 10px;
+  animation-name: inner;
+  animation: inner 2s infinite;
+}
+#app .water-ripple-middle{
+  top: 13px;
+  left: 13px;
+  width: 30px;
+  height: 30px;
+  animation: middle 2s infinite;
+}
+#app .water-ripple-outer{
+  top: 48vh;
+  left: 31%;
+  width: 60px;
+  height: 60px;
+  opacity: 1;
+  animation: outer 2s infinite;
+}
+#app .end{
+  top: 4vh;
+  left: 68%;
+}
+.little-people{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 6vh;
+  left: 70%;
+  animation-delay: 3s;
+  animation: goEating 5s linear;
+}
+@keyframes inner{
+  0% {
+    border: solid 2px #5780EC;
+  }
+  50% {
+    border: solid 2px #1A3C78;
+  }
+  100%{
+    border: solid 2px #1A3C78;
+  }
+}
+@keyframes middle{
+  0% {
+    border: solid 2px #1A3C78;
+  }
+  50% {
+    border: solid 2px #5780EC;
+  }
+  100%{
+    opacity: 1;
+    border: solid 2px #1A3C78;
+  }
+}
+@keyframes outer{
+  0% {
+    border: solid 2px #1A3C78;
+  }
+  50% {
+    border: solid 2px #1A3C78;
+  }
+  100%{
+    border: solid 2px #5780EC;
+  }
+}
+@keyframes goEating{
+  0%{
+    top: 34vh;
+    left: 33%;
+  }
+  20%{
+    top: 34vh;
+    left: 44%;
+  }
+  50%{
+    top: 6vh;
+    left: 44%;
+  }
+  100%{
+    top: 6vh;
+    left: 70%;
+  }
+}
+</style>
+</html>

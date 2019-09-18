@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ws</title>
+    <script>        
+        window.onload = function () {
+            var indexX=0,indexY=0, // 运动点的当前坐标存储
+            clickX = 0,clickY = 0, // 鼠标点击的坐标
+            stepX = 1,stepY = 1, // x与y运动步长
+            totalNum = 0, // 总共需要运动次数
+            count = 0, // 当前运动了多少步
+            isClick = 0 // 是否有点击事件
+            window.addEventListener('click', function (e) {
+                clickX = e.clientX
+                clickY = e.clientY
+                let diffOfX = (clickX - indexX)
+                let diffOfY = (clickY - indexY)
+                // 自定义速度 100ms每像素做运算
+                stepX = diffOfX/100
+                stepY = diffOfY/100
+                totalNum = (clickX-indexX)/stepX
+                isClick = 1
+                animation()
+            })
+
+            function init() {
+                window.requestAnimationFrame(animation)
+            }
+            function animation() {
+                if (isClick) count++
+                // 递归结束条件：鼠标当前有点击事件或者鼠标无点击事件运动超过canvas边界
+                if (indexX < 0 || indexY < 0|| indexX>700 || indexY>700 || count>totalNum) {
+                    clickX = 0
+                    clickY = 0
+                    count = 0
+                    totalNum = 0
+                    return
+                }
+                
+                var canvas = document.getElementById('canvas')
+                if (canvas.getContext && indexX<1000) {
+                    var contex = canvas.getContext('2d')
+                    contex.clearRect(0,0,1000,800)
+                    // 绘制矩形
+                    for (let i = 0;i<10000;i++) {
+                        contex.fillStyle = 'red'
+                        contex.fillRect(indexX+i*10*Math.random(),indexY+i*10*Math.random(),10,10)
+                    }
+                    // 默认步长为1.
+                    indexX+=stepX
+                    indexY+=stepY
+                }
+                window.requestAnimationFrame(animation)
+            }
+            init()
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="1000" height="700" style="position: absolute; top: 0; left: 0;border: 1px solid #cdcdcd"></canvas>
+</body>
+</html>

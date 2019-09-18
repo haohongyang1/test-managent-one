@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>布局test</title>
+</head>
+<body>
+  <div class="container">
+    <img class="absolute-son" src="../demo22.png">
+  </div>
+</body>
+
+<style>
+  .container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .absolute-son {
+    position: fixed;
+    width: 100px;
+    height: 80px;
+    background: red;
+    left: 70%;
+    animation: drop 5s;
+  }
+  @keyframes drop {
+    0% {
+      transform: translateY(-300px);
+      -ms-transform:translateY(-300px);
+      -webkit-transform:translateY(-300px);
+    }
+    100% {
+      transform: translateY(100vh);
+      -ms-transform:translateY(100vh);
+      -webkit-transform:translateY(100vh);
+    }
+  }
+  .test{
+    left: 10px;
+  }
+</style>
+</html>

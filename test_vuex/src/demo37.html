@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>二叉树</title>
+
+</head>
+<body>
+</body>
+<script>
+// 定义一个二叉树
+var nodes = {
+  node: 6,
+  left: {
+    node: 5,
+    left: {
+      node: 4,
+      right: {
+        node: 7
+      }
+    },
+    right: {
+      node: 3
+    }
+  },
+  right: {
+    node: 2,
+    right: {
+      node: 1
+    }
+  }
+}
+/* 
+遍历方式：--__深度遍历 -- __先序遍历
+                      |__中序遍历
+                      |__后序遍历
+          |
+          |__广度遍历 -- 即层次遍历
+*/
+// 先序遍历---递归
+var result = []
+var dfs = function(nodes) {
+  if(nodes.node) {
+    result.push(nodes.node)
+    nodes.left && dfs(nodes.left)
+    nodes.right && dfs(nodes.right)
+  }
+}
+dfs(nodes)
+console.log(result)
+// ---非递归
+var dfs = function(nodes) {
+  var result = []
+  var stack = []
+  stack.push(nodes)
+  while (stack.length) {
+    var item = stack.pop()
+    result.push(item.node)
+    item.right && stack.push(item.right)
+    item.left && stack.push(item.left)
+  }
+  return result
+}
+console.log(dfs(nodes))
+
+
+// 中序遍历---递归
+var result = []
+var dfs = function(nodes) {
+  if(nodes.node) {
+    nodes.left && dfs(nodes.left)
+    result.push(nodes.node)
+    nodes.right && dfs(nodes.right)
+  }
+}
+dfs(nodes)
+console.log(result)
+// ---非递归
+var dfs = function(nodes) {
+  var result = []
+  var stack = []
+  var item = nodes
+  stack.push(nodes)
+  while (stack.length) {
+    if(item.left && !item.touched) {
+      item.touched = true
+      item = item.left
+      stack.push(item)
+      continue
+    }
+    item.touched && delete item.touched // 清理标记
+    item = stack.pop()
+    result.push(item.node)
+    item.right && stack.push(item.right)
+  }
+  return result
+}
+console.log(dfs(nodes))
+
+// 后序遍历
+var result = []
+var dfs = function(nodes) {
+  if(nodes.node) {
+    nodes.left && dfs(nodes.left)
+    nodes.right && dfs(nodes.right)
+    result.push(nodes.node)
+  }
+}
+dfs(nodes)
+console.log(result)
+// ---非递归
+var dfs = function(nodes) {
+  var result = []
+  var stack = []
+  var item = nodes
+  stack.push(nodes)
+  while (stack.length) {
+    if(item.left && !item.touched) {
+      item.touched = 'left'
+      item = item.left
+      stack.push(item)
+      continue
+    }
+    if(item.right && item.touched !== 'right') {
+      item.touched = 'right'
+      item = item.right
+      stack.push(item)
+      continue
+    }
+    var out = stack.pop()
+    out.touched && delete out.touched // 清理标记
+    result.push(out.node)
+    item = stack.length ? stack[stack.length - 1] : null
+  }
+  return result
+}
+console.log(dfs(nodes))
+
+// 层次遍历---递归
+var result = []
+var queue = [nodes]
+var bfs = function(count) {
+  count = count || 0
+  if(queue[count]) {
+    result.push(queue[count].node)
+    var left = queue[count].left
+    var right = queue[count].right
+    if(left) {
+      queue.push(left)
+    }
+    if(right) {
+      queue.push(right)
+    }
+    bfs(++count)
+  }
+}
+bfs()
+console.log(result)
+// ---非递归
+var bfs = function(nodes) {
+  var result = []
+  var queue = []
+  var pointer = 0
+  queue.push(nodes)
+  while(pointer < queue.length) {
+    var item = queue[pointer++] // 这里不使用 shift 方法（复杂度高），用一个指针代替
+    result.push(item.node)
+    console.log(item.node)
+    item.left && queue.push(item.left)
+    item.right && queue.push(item.right)
+  }
+  return result
+}
+console.log(bfs(nodes))
+
+/*
+二叉查找树：
+*/
+      function BinaryTree() {
+          function Node(key) {
+              this.key = key;
+              this.left = null;
+              this.right = null;
+          }
+ 
+          var root = null;
+ 
+          //具体的实现---插入
+          var insertNode = function (node, newNode) {
+              if (newNode.key < node.key) {
+                  if (node.left === null) {
+                      node.left = newNode;
+                  } else {
+                      insertNode(node.left, newNode);
+                  }
+              } else {
+                  if (node.right === null) {
+                      node.right = newNode;
+                  } else {
+                      insertNode(node.right, newNode);
+                  }
+              }
+          };
+ 
+          var inOrderTraverseNode = function (node, callback) {
+              if (node !== null) {
+                  inOrderTraverseNode(node.left, callback);
+                  callback(node.key);
+                  inOrderTraverseNode(node.right, callback);
+              }
+          };
+ 
+          var preOrderTraverseNode = function (node, callback) {
+              if (node !== null) {
+                  callback(node.key);
+                  preOrderTraverseNode(node.left, callback);
+                  preOrderTraverseNode(node.right, callback);
+              }
+          };
+ 
+          var postOrderTraverseNode = function (node, callback) {
+              if (node !== null) {
+                  postOrderTraverseNode(node.left, callback);
+                  postOrderTraverseNode(node.right, callback);
+                  callback(node.key);
+              }
+          };
+ 
+          var minNode = function (node) {
+              if (node) {
+                  while (node.left) {
+                      node = node.left;
+                  }
+                  return node.key;
+              }
+              return null;
+          };
+ 
+          var maxNode = function (node) {
+              if (node) {
+                  while (node.right) {
+                      node = node.right;
+                  }
+                  return node.key;
+              }
+              return null;
+          };
+ 
+          var searchNode = function (node, key) {
+              if (node) {
+                  if (key < node.key) {
+                      return searchNode(node.left, key);
+                  } else if (key > node.key) {
+                      return searchNode(node.right, key);
+                  } else {
+                      return true;
+                  }
+              } else {
+                  return false;
+              }
+          };
+ 
+          var findMinNode = function (node) {
+              if (node) {
+                  while (node.left) {
+                      node = node.left;
+                  }
+                  return node;
+              }
+ 
+              return null;
+          };
+ 
+          var removeNode = function (node, key) {
+              if (node) {
+                  if (key < node.key) {
+                      node.left = removeNode(node.left, key);
+                      return node;
+                  } else if (key > node.key) {
+                      node.right = removeNode(node.right, key);
+                      return node;
+                  } else { //如果相等
+                      if (node.left === null && node.right === null) {
+                          node = null;
+                          return node;
+                      }
+                      if (node.left === null) {//只有右子树
+                          node = node.right;
+                          return node;
+                      } else if (node.right === null) {//只有左子树
+                          node = node.left;
+                          return node;
+                      }
+                      var tmp = findMinNode(node.right);
+                      node.key = tmp.key;
+                      node.right = removeNode(node.right, tmp.key);
+                      return node;
+                  }
+              }
+              return null;
+          };
+ 
+          //这是对外的接口
+          this.inOrderTraverse = function (callback) {
+              inOrderTraverseNode(root, callback);
+          };
+ 
+          this.preOrderTraverse = function (callback) {
+              preOrderTraverseNode(root, callback);
+          };
+ 
+          this.postOrderTraverse = function (callback) {
+              postOrderTraverseNode(root, callback);
+          };
+ 
+          this.insert = function (key) {
+              var newNode = new Node(key);
+              if (root === null) {
+                  root = newNode;
+              } else {
+                  insertNode(root, newNode);
+              }
+          };
+          
+          this.min = function () {
+              return minNode(root);
+          };
+ 
+          this.max = function () {
+              return maxNode(root);
+          };
+          
+          this.search = function (key) {
+              return searchNode(root, key);
+          };
+ 
+          this.remove = function (key) {
+              root = removeNode(root, key);
+          };
+      }
+ 
+      var nodes = [8, 3, 10, 1, 6, 14, 4, 7, 13];
+      var binaryTree = new BinaryTree();
+ 
+      nodes.forEach(function (key) {
+          binaryTree.insert(key);
+      });
+      
+      var callback = function (key) {
+          console.log(key);
+      };
+ 
+      binaryTree.remove(8);
+      binaryTree.inOrderTraverse(callback);
+</script>
+</html>

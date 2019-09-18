@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>ul-li换行</title>
+  <script src="../vuex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+    <ul>
+        <li class="li-nowrap">1111111111</li>
+        <li class="li-nowrap">2222222222</li>
+        <li class="li-nowrap">3333333333</li>
+        <li class="li-nowrap">4444444444</li>
+    </ul>
+</body>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    width: 150px;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+.li-nowrap {
+    /* width: 80px; */
+    display: block;
+}
+</style>
+</html>

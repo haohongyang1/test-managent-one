@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>CSS3动画-模拟太阳系</title>
+</head>
+<body>
+  <div id="app" class="system-container">
+    <!-- 太阳-圆心 -->
+    <div class="system-sun"></div>
+    <!-- 水星 -->
+    <div class="system-mercury"></div>
+    <!-- 木星 -->
+    <div class="system-venus-orbit"></div>
+  </div>
+</body>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  /* 公共变量 */
+  body{
+    --circleCenterLeft: 395;
+    --circleCenterTop: 395;
+    --sun-size: 90;
+    --mercury-size: 10;
+    --venusOrbit-size: 22;
+    height: 600px;
+  }
+  /* 公共样式 */
+  .system-sun, .system-mercury, .system-venus-orbit{
+    position: absolute;
+    border-radius: 50%;
+  }
+  @keyframes rotate{
+    100%{
+      transform: rotate(-360deg)
+    }
+  }
+  /*  */
+  .system-container .system-sun{
+    width: calc(var(--sun-size) * 1px);
+    height: calc(var(--sun-size) * 1px);
+    background-color: #de1c31;
+    left: calc((var(--circleCenterLeft) - var(--sun-size)/2) * 1px);
+    top: calc((var(--circleCenterLeft) - var(--sun-size)/2) * 1px);
+  }
+  .system-container .system-mercury{
+    --mercury-position-distance: calc((var(--circleCenterLeft) - var(--mercury-size)/2 - var(--sun-size)/2) * 1px);
+    width: calc(var(--mercury-size) * 1px);
+    height: calc(var(--mercury-size) * 1px);
+    background-color: #36282b;
+    left: var(--mercury-position-distance);
+    top: var(--mercury-position-distance);
+
+    transform-origin: calc((var(--mercury-size)/2 + var(--sun-size)/2) * 1px) calc((var(--mercury-size)/2 + var(--sun-size)/2) * 1px);
+    animation: rotate 1.5s infinite linear;
+  }
+  .system-container .system-venus-orbit{
+    --venusOrbit-position-distance: calc((var(--circleCenterLeft) - var(--venusOrbit-size)/2 - var(--sun-size)/2 - 30) * 1px);
+    width: calc(var(--venusOrbit-size) * 1px);
+    height: calc(var(--venusOrbit-size) * 1px);
+    background-color: #F69D61;
+    left: var(--venusOrbit-position-distance);
+    top: var(--venusOrbit-position-distance);
+
+    transform-origin: calc((var(--venusOrbit-size)/2 + var(--sun-size)/2 + 30) * 1px) calc((var(--mercury-size)/2 + var(--sun-size)/2 + 30) * 1px);
+    animation: rotate 1.5s infinite linear;
+  }
+</style>
+</html>

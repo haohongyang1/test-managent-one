@@ -34,26 +34,26 @@
       v: 'afterClass',
       h: 0
     },
-    // {
-    //   v: 'afterClassFrom',
-    //   h: 0
-    // },
-    // {
-    //   v: 'afterClassTo',
-    //   h: 0
-    // },
-    // {
-    //   v: 'beforeClass',
-    //   h: 0
-    // }
-    // {
-    //   v: 'beforeClass1',
-    //   h: 0
-    // }
-    // {
-    //   v: 'afterClassTo3',
-    //   h: 0
-    // }
+    {
+      v: 'afterClassFrom',
+      h: 0
+    },
+    {
+      v: 'afterClassTo',
+      h: 0
+    },
+    {
+      v: 'beforeClass',
+      h: 0
+    },
+    {
+      v: 'beforeClass1',
+      h: 0
+    },
+    {
+      v: 'afterClassTo3',
+      h: 0
+    }
   ]
   // 模仿远程值
   var arr2 = [
@@ -95,8 +95,8 @@
     let o2 = differenceSet(arrUc, arrDefault)
     let len1 = Object.keys(o1).length
     let len2 = Object.keys(o2).length
-    console.log(o1)
-    console.log(o2)
+    // console.log(o1)
+    // console.log(o2)
     if (len1 === 0 && len2 === 0) {
       return arrUc
     }
@@ -114,22 +114,142 @@
       }
     }
     // debugger
-    console.log(arrUc)
+    // console.log(arrUc)
     let numAdd = 0
     if (len1 > 0) {
       for (let i = 0; i < arrUc.length + len1; i++) {
         for (let j in o1) {
           if (parseInt(j) == i) {
-            debugger
+            // debugger
             arrUc.splice(i, 0, o1[j])
           }
         }
       }
     }
-    console.log(arrUc)
+    // console.log(arrUc)
     return arrUc
   }
-  console.log(concatArr4(arr, arr2))
+  // console.log(concatArr4(arr, arr2))
+
+// 数组筛选
+var ucMatchDefaults = [
+    {
+      v: 'followStage',
+      h: 0,
+      sub: [
+        {
+          v: 'afterClass',
+          h: 0
+        },
+        {
+          v: 'intention',
+          h: 0
+        },
+        {
+          v: 'expireTime',
+          h: 1
+        }
+      ]
+    },
+    {
+      v: 'allowCondition',
+      h: 0,
+      sub: [
+        {
+          v: 'assignTime',
+          h: 0
+        },
+        {
+          v: 'locked',
+          h: 0
+        },
+        {
+          v: 'searchByGroup',
+          h: 0
+        }
+      ]
+    }
+  ]
+  function searchParamsFilter(searchParams) {
+    return searchParams.filter((item, index) => {
+      if (item.h === 0) {
+        searchParams[index].sub = item.sub.filter(item => item.h === 0)
+      }
+      return item.h === 0
+    })
+  }
+  // console.log('searchParamsFilter', searchParamsFilter(ucMatchDefaults))
+
+  var result = [
+    {
+      v: 'followStage',
+      h: 0,
+      sub: [
+        {
+          v: 'afterClass',
+          h: 1,
+          source: 'afterClass'
+        },
+        {
+          v: 'intention',
+          h: 1,
+          source: 'intention'
+        },
+        {
+          v: 'expireTime',
+          h: 1,
+          source: 'expireTime'
+        }
+      ]
+    },
+    {
+      v: 'allowCondition',
+      h: 0,
+      sub: [
+        {
+          v: 'assignTime',
+          h: 0,
+          source: 'assignTime'
+        },
+        {
+          v: 'locked',
+          h: 0,
+          source: 'locked'
+        },
+        {
+          v: 'searchByGroup',
+          h: 0,
+          source: 'searchByGroup'
+        }
+      ]
+    }
+  ]
+  function deleteSubSourceFromSearchData (searchDataAllCopy) {
+    // 去除 srouce 需要更改        
+    // for (let i = 0; i < searchDataAllCopy.length; i ++) {
+    //   let rowItem = searchDataAllCopy[i]
+    //   for (let j = 0; j < rowItem.sub.length; j++) {
+    //     delete rowItem.sub[j].source
+    //   }
+    // }
+    searchDataAllCopy.forEach((rowItem, idx) => {
+      rowItem.sub.forEach((subItem, index) => {
+        delete subItem.source
+        console.log(subItem, '=====copy')
+        console.log(resultCopy[idx].sub[index], '=====')
+      })
+    })
+    return searchDataAllCopy
+  }
+  // 为什么改变了原数组
+  // let resultCopy = Array.from(result)
+  // let resultCopy = JSON.parse(JSON.stringify(result))
+  let resultCopy = result.concat()
+  resultCopy[0].sub[0].source = '111111'
+
+  // resultCopy = deleteSubSourceFromSearchData(result)
+  console.log('resultCopy', resultCopy[0].sub[0].source)
+  console.log('ucMatchDefaults', result[0].sub[0].source)
 </script>
 
 </html>

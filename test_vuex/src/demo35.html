@@ -1,33 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
-  <title>自己封装一个js库</title>
-   
+  <title>ul-li换行</title>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
 </body>
 <script>
-    // 所有引用类型都有一个__proto__，隐式原型，函数独有prototype
-    (function (global) {
-        function Libary(selector) {
-            return test(selector)
-        }
-        function test(selector) {
-            var ele = document.getElementsByTagName(selector);
-            this.elements = ele
-        }
-        test.prototype.css = function (name, value) {
-            
-        }
-        global.$ = global.Libary = Libary
-    })(window)
-    $('div').css()
-    $('p').css()
+axios.get('', {
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 </script>
 </html>

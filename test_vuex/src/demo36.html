@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>实现一个TreeNode方法</title>
+   
+</head>
+<body>
+</body>
+<script>
+/* 要求如下：
+有一颗二叉树定义如下：treeNode
+要求：定义一个方法TreeNodeNum，求二叉树所有根到叶子路径组成的组成的数字之和；
+输出示例：TreeNodeNum(treeNode) -> 19 -> 即(1+2+4)+(1+2+5)+(1+3)😜
+*/
+var treeNode = {
+    value: 1,
+    left: {
+        value: 2,
+        left: {
+            value: 4,
+            left: null,
+            right: null
+        },
+        right: {
+            value: 5,
+            left: null,
+            right: null
+        }
+    },
+    right: {
+        value: 3,
+        left: null,
+        right: null
+    }
+}
+function TreeNodeNum(root) {
+    let nodeValueNum
+    // 到叶子节点为止
+    if (!root.left && !root.right) {}
+}
+</script>
+</html>

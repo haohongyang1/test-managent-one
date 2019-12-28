@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>运动追踪</title>
+  <script>
+    function track () {
+        let trackBlock = document.getElementById('trackBlock')
+        let frames = findKeyframesRule()
+        console.log(frames)
+        window.addEventListener('click', function (e) {
+          const pos = {
+            x: e.clientX,
+            y: e.clientY
+          }
+          frames.deleteRule('100%')
+          frames.appendRule(`100% {
+              left: ${pos.x}px;
+              top: ${pos.y}px;
+            }`)
+        })
+        function findKeyframesRule(){
+          debugger
+          let docuStyList = document.styleSheets
+          for (let styleIndex = 0; styleIndex < docuStyList.length; styleIndex++) {
+            let styleItem = docuStyList[styleIndex].cssRules
+            for (let cssIndex = 0; cssIndex < styleItem.length; cssIndex++) {
+              let cssItem = styleItem[cssIndex]
+              if (cssItem.type === 7) {
+                return cssItem
+              }
+            }
+          }
+        }
+    }
+
+    </script>  
+</head>
+<body onload="track()">
+    <div id="trackBlock" class="track-block"></div>
+</body>
+
+<style>
+.track-block {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: red;
+	animation: clickTrack infinite 10s linear;
+}
+@keyframes clickTrack {
+	0% {
+		left: 50%;
+		top: 0;
+	}
+	100% {
+		left: 50%;
+		top: 95%;
+	}
+}
+</style>
+</html>

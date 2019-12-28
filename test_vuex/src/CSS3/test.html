@@ -22,20 +22,79 @@
 
 <head>
   <meta charset="utf-8">
-  <title>CSS3动画-太阳系各个行星轨迹</title>
-  <script src="../vuex.js"></script>
+  <title>CSS3动画-属性测试</title>
 </head>
 <body>
-  <div class="animate-test linear">linear</div>
-  <div class="animate-test ease">ease</div>
+  <!-- <div class="animate-test linear">linear</div> -->
+  <!-- <div class="animate-test ease">ease</div>
   <div class="animate-test ease-in">ease-in</div>
   <div class="animate-test ease-out">ease-out</div>
   <div class="animate-test ease-in-out">ease-in-out</div>
   <div class="animate-test cubic-bezier">cubic-bezier</div>
   
-  <div class="translate-test">translate</div>
+  <div class="translate-test">translate</div> -->
+
+  <div id="animation" class="test-animation"></div>
 </body>
+<script>
+(function () {
+  var ele = document.getElementById('animation')
+  ele.addEventListener('animationiteration', (e) => {
+    // debugger
+    console.log('===',e)
+  })
+})()
+</script>
 <style>
+.test-animation {
+  background: red;
+  position: relative;
+  top: 30%;
+  animation: rotate infinite 2s linear;
+}
+@keyframes rotate {
+  1% {
+    left: 40%;
+    width: 333px;
+    height: 339px;
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 0deg);
+    visibility: hidden;
+  }
+
+  80% {
+    left: 40%;
+    width: 333px;
+    height: 339px;
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 0deg);
+    visibility: visible;
+  }
+
+  85% {
+    left: 70%;
+    width: 150px;
+    height: 200px;
+    transform: rotate3d(0, 0, 1, 360deg);
+    visibility: visible;
+  }
+
+  90% {
+    left: 100%;
+    width: 50px;
+    height: 100px;
+    transform: rotate3d(0, 0, 1, 360deg);
+    visibility: visible;
+  }
+
+  100% {
+    left: 100%;
+    width: 50px;
+    height: 100px;
+    transform: rotate3d(0, 0, 1, 360deg);
+    visibility: visible;
+  }
+}
   .animate-test{
     position: absolute;
     width: 100px;

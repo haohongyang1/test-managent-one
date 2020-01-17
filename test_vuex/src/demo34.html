@@ -3,34 +3,38 @@
 
 <head>
   <meta charset="utf-8">
-  <title>ul-li换行</title>
-  <script src="../vuex.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <title>ws</title>
+    <script>
+        window.onload = function () {
+            var indexI=0,indexY=0
+            window.addEventListener('click', function (e) {
+                    indexI = e.clientX
+                    indexY = e.clientY                
+            })
+
+            function init() {
+                window.requestAnimationFrame(animation)
+            }
+            function animation() {
+                if (indexI>1000) return
+                var canvas = document.getElementById('canvas')
+                if (canvas.getContext && indexI<1000) {
+                    var contex = canvas.getContext('2d')
+                    contex.clearRect(0,0,1000,800)
+                    // 绘制矩形
+                    contex.fillStyle = 'red'
+                    contex.fillRect(indexI,indexY,10,10)                    
+                    indexI++
+                    indexY++
+                }
+                
+                window.requestAnimationFrame(animation) // 关键点在这里
+            }
+            init()
+        }
+    </script>
 </head>
 <body>
-    <ul>
-        <li class="li-nowrap">1111111111</li>
-        <li class="li-nowrap">2222222222</li>
-        <li class="li-nowrap">3333333333</li>
-        <li class="li-nowrap">4444444444</li>
-    </ul>
+    <canvas id="canvas" width="1000" height="800" style="position: absolute; top: 0; left: 0;border: 1px solid #cdcdcd"></canvas>
 </body>
-<style>
-*{
-    margin: 0;
-    padding: 0;
-}
-ul{
-    width: 150px;
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-}
-.li-nowrap {
-    /* width: 80px; */
-    display: block;
-}
-</style>
 </html>

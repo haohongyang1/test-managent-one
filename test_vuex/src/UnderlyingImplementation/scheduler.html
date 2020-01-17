@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>异步调度器</title>
+</head>
+<body>
+<script>
+  // 要求：JS实现一个带并发限制的异步调度器Scheduler，保证同时运行的任务最多有两个，具体输入输出要求见下方要求
+
+class Scheduler {
+	constructor() {
+		this.tasks = [], // 待运行的任务
+		this.usingTask = [] // 正在运行的任务
+	}
+	// promiseCreator 是一个异步函数，return Promise
+	add(promiseCreator) {
+		return new Promise((resolve, reject) => {
+      debugger
+			promiseCreator.resolve = resolve
+			if (this.usingTask.length < 2) {
+				this.usingRun(promiseCreator)
+			} else {
+				this.tasks.push(promiseCreator)
+			}
+		})
+	}
+
+	usingRun(promiseCreator) {
+    this.usingTask.push(promiseCreator)
+		promiseCreator().then(() => {
+			promiseCreator.resolve()
+			this.usingMove(promiseCreator)
+			if (this.tasks.length > 0) {
+				this.usingRun(this.tasks.shift())
+			}
+		})
+	}
+
+	usingMove(promiseCreator) {
+		let index = this.usingTask.findIndex(promiseCreator)
+		this.usingTask.splice(index, 1)
+	}
+}
+
+const timeout = (time) => new Promise(resolve => {
+	setTimeout(resolve, time)
+})
+
+const scheduler = new Scheduler()
+
+const addTask = (time, order) => {
+	scheduler.add(() => timeout(time)).then(() => console.log(order))
+}
+
+addTask(1000, '1')
+addTask(500, '2')
+addTask(300, '3')
+addTask(400, '4')
+
+// 2 3 1 4
+
+
+
+// class Scheduler {
+//   // ===== doSomthing ========
+//   constructor () {
+//     this._tasks = [] // 待执行任务
+//     this.usingTask = [] // 正在运行的任务
+//   }
+
+//   add (promiseCreator) {
+//     return new Promise((resolve, reject) => {
+//       promiseCreator.resolve = resolve // ?
+//       if (this.usingTask.length < 2) {
+//         // 
+//         this.usingRun(promiseCreator)
+//       } else {
+//         // 进入等待队列
+//         this._tasks.push(promiseCreator)
+//       }
+//     })
+//   }
+//   usingRun(promiseCreator) {
+//     this.usingTask.push(promiseCreator)
+//     promiseCreator().then(() => {
+//       promiseCreator.resolve()
+
+//       this.usingMove(promiseCreator)
+//       if (this._tasks.length > 0) {
+//         this.usingRun(this._tasks.shift())
+//       }
+//     })
+//   }
+//   usingMove(promiseCreator) {
+//     // 清除正在运行的任务中已经执行完的任务
+//     let index = this.usingTask.findIndex(promiseCreator)
+//     this.usingTask.splice(index, 1)
+//   }
+// }
+
+
+// const timeout = (time) => new Promise(resolve => {
+//   setTimeout(resolve, time)
+// })
+// const scheduler = new Scheduler()
+// const addTask = (time, order) => {
+//   scheduler.add(() => timeout(time).then(() => {console.log(order)}))
+// }
+// addTask(1000, '1')
+// addTask(500, '2')
+// addTask(300, '3')
+// addTask(400, '4')
+// output:2 3 1 4;首先1、2两个任务进入队列，500ms时，2执行完毕输出2，任务3进队，(500+300)ms时，3完成，任务4进队，1000ms时，1完成输出1，1200ms时，4完成，输出4
+</script>
+</body>
+</html>

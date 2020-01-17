@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Event Bus封装</title>
+</head>
+<body>
+<script>
+  // 要求：实现on和emit方法
+  EventBus.on('custom-name', function (data) {console.log(data)})
+  EventBus.emit('custom-name', 1)
+  class EventBus {
+    constructor() {
+      this._events = new Map()
+    }
+    on(type, fn) {
+      const handler = this._events.get(type)
+      if (!handler) {
+        // 不存在事件
+        this._events.set(type, fn)
+      } else if (handler && typeof handler === 'function') {
+        // 如果handler是函数说明只有一个监听者，再新增监听者，需要用数组存储
+        this._events.set(type, [handler, fn])
+      } else {
+        // 存在事件，已经是数组了，直接push进去即可
+        handler.push(fn)
+      }
+    }
+    // 触发事件
+    emit(type, ...args) {
+      let handler
+      handler = this._events.get(type)
+      if (Array.isArray(handler)) {
+        for (let i = 0; i<handler.length;i++) {
+          if (args.length > 0) {
+            handler[i].apply(this, args)
+          } else {
+            handler[i].call(this)
+          }
+        }
+      }else {
+        // 单个函数直接触发
+        if (args.length > 0) {
+          handler.apply(this, args)
+        } else {
+          handler.call(this)
+        }
+      }
+      return true
+    }
+    removeListener(type, fn) {
+      const handler = this._events.get(type)
+      if (handler && typeof handler === 'function') {
+        // 只被监听一次，直接删除
+        this._events.delete(type)
+      } else {
+        // 被监听多次，用数组存储
+        let position = handler.findIndex(item => item === fn)
+        // 如果找到匹配函数，再数组中删除
+        if (position !== -1) {
+          handler.splice(position, 1)
+          // 如果长度为1的时候，要重新 set一下变成非数组存储
+          if (handler.length === 1) {
+            this._events.set(type,handler[0])
+          }
+        } else {
+          return this
+        }
+      }
+    }
+  }
+</script>
+</body>
+</html>

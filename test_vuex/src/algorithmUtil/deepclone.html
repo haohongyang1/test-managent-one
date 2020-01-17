@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>deep clone</title>
+</head>
+<body>
+  
+</body>
+<script>
+// ============ 如何实现一个深拷贝？=========
+// 1，乞丐版
+JSON.parse(JSON.stringify())
+// 缺点：不能拷贝函数、循环引用问题
+
+// 2，简单版
+function clone (target) {
+  let cloneTarget = {}
+  for (let key in target) {
+    cloneTarget[key] = target[key]
+  }
+  return cloneTarget
+}
+// 3、考虑深层引用（递归函数）和基础类型拷贝（判断类型）
+function clone (target) {
+  if (typeof target === 'object') {
+    let cloneTarget = {}
+    for (let key in target) {
+      cloneTarget[key] = clone(target[key])
+    }
+    return cloneTarget
+  } else {
+    return target
+  }
+}
+// 4，考虑数据类型拷贝（Array.isArray()判断参数类型）
+function clone (target) {
+  if (typeof target === 'object') {
+    let cloneTarget = Array.isArray(target) ? [] : {}
+    for (let key in target) {
+      cloneTarget[key] = clone(target[key])
+    }
+    return cloneTarget
+  } else {
+    return target
+  }
+}
+// 5，解决循环引用问题（开辟一个空间存储当前对象和拷贝对象的关系，拷贝之前先去存储空间找，如果拷贝过直接返回，如果没拷贝过继续拷贝并存储在空间中）
+function clone (target, map = new Map()) {
+  if (typeof target === 'object') {
+    let cloneTarget = Array.isArray(target) ? [] : {}
+    // ===start
+    if (map.get(target)) {
+      return map.get(target)
+    }
+    map.set(target, cloneTarget)
+    // ===end
+    for (let key in target) {
+      cloneTarget[key] = clone(target[key])
+    }
+    return cloneTarget
+  } else {
+    return target
+  }
+}
+// 问题：如何优化上面一段代码？
+// 将map更改为new WeakMap()替换new Map()；WeakMap()key必须为对象，弱引用??
+
+</script>
+</html>

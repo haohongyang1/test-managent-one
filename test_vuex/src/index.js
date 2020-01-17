@@ -1,11 +1,29 @@
-const WebSocketServer = require('ws').Server;
-const wss = new WebSocketServer({ port: 8888 });
-// 一旦与之连接就出发connection事件
-wss.on('connection', function (ws) {
-console.log("connected");
-// 客户端反馈给服务端的信息
-ws.on('message', function (message) {
-// 服务器给用户反馈会信息
-ws.send(message);
-console.log(message);
+var express = require('express');
+var fs=require("fs");
+var app = express();
+// var path = require("path")
+
+//方法1：通过express.static访问静态文件，这里访问的是ajax.html
+// app.use(express.static("./"));
+
+//方法2：使用fs.readFile打开html文件
+app.get("./intercept.html", function(request, response) {
+   fs.readFile("./"+request.path.substr(1),function(err,data){
+        // body
+        if(err){
+            console.log(err);
+            //404：NO ,....T FOUND
+            response.writeHead(404,{"Content-Type":"text/html"});
+        }
+        else{
+            //200：OK
+            response.writeHead(200,{"Content-Type":"text/html"});
+            response.write(data.toString());
+        }
+        response.end();
+    });
+});
+
+app.listen(3000, function() {   //监听http://127.0.0.1:3000端口
+    console.log("server start");
 });

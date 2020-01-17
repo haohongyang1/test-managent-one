@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>inherit method</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // 首先提供一个父类，以及他的三个属性name,sum,age
+  function Person (name) {
+    this.name = name
+    this.sum = function () {
+      console.log(this.name)
+    }
+  }
+  Person.prototype.age = 10
+  // Six ways to inherit
+  // 1.原型链继承：让新实例的原型的父实例
+  function subPerson() {
+    this.name = 'sub'
+  }
+  subPerson.prototype = new Person() // ****
+  //2.借用构造函数继承：使用cal或apply将父类构造函数引入子类，缺点：只能继承父类constructor中属性，无法实现construct复用
+  function Con () {
+    Person.call(this, 'conName') // ****
+  }
+  // 3.组合继承：前两种组合，缺点：调用了两次父类函数，耗内存
+  function subType(name) {
+    Person.call(this, name)
+  }
+  subType.prototype = new Person()
+  // 4.原型式继承：用一个函数包装一个对象，然后返回这个函数的实例对象，这个函数就变成了可以随意添加任意属性的实例或对象
+  // Object.create()就是这个原理
+  function content(obj) {
+    function F () {}
+    F.prototype = obj // **** 继承了传入参数
+    return new F() // **** 返回函数对象
+  }
+  var sub = new Person()
+  var sub1 = content(sub)
+</script>
+</html>

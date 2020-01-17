@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>模拟new</title>
+</head>
+<body>
+<script>
+  // new操作符：
+  // 1 创建一个全新对象；2 __proto__赋值；3 改变this指向实例化对象；4 通过new创建的每个对象最终被
+function objectFactory() {
+  const obj = new Object(), Constructor = [].shift.call(arguments)
+  obj.__proto__ = Constructor.prototype
+  Constructor.apply(obj, arguments)
+  return obj
+}
+
+// 实现一个call
+
+</script>
+</body>
+</html>

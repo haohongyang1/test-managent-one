@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>button按钮粒子效果</title>
+</head>
+<body>
+    <div class="container">
+        <button class="button">Suprise</button>
+    </div>
+</body>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .container{
+    position: relative;
+    top: 100px;
+    left: 500px;
+    width: 160px;
+    height: 100px;
+    overflow: hidden;
+  }
+  .button {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: #ff0081;
+      /* background-color: #FFFAAA; */
+      border: 0;
+      width: 100px;
+      height: 49px;
+      color: white;
+      font-weight: bold;
+  }
+  /* 方法1：使用box-shadow */
+  .button::after {
+    position: absolute;
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #ff0081;
+    box-shadow: 
+        60px 70px #ff0081, 70px 60px 0 2px #ff0081, 80px 30px 0 3px #ff0081,
+        75px 20px #ff0081, 60px 10px 0 2px #ff0081, 80px 0px 0 3px #ff0081,
+        75px -10px #ff0081, 60px -20px 0 2px #ff0081, 80px -60px 0 3px #ff0081,
+        50px -70px #ff0081, 50px -50px 0 2px #ff0081, 50px -80px 0 3px #ff0081,
+        20px -75px #ff0081, 25px -55px 0 2px #ff0081, 30px -70px 0 3px #ff0081,
+
+        0px -48px #ff0081, 10px -50px 0 2px #ff0081, 5px -60px 0 3px #ff0081,
+        -50px -70px #ff0081, -55px -50px 0 2px #ff0081, -45px -80px 0 3px #ff0081,
+        -70px -75px #ff0081, -65px -55px 0 2px #ff0081, -85px -70px 0 3px #ff0081,
+        -80px -70px #ff0081, -60px -50px 0 2px #ff0081, -70px -80px 0 3px #ff0081,
+        -100px -75px #ff0081, -110px -50px 0 2px #ff0081, -105px -65px 0 3px #ff0081,
+        
+        -115px 70px #ff0081, -110px 60px 0 2px #ff0081, -150px 30px 0 3px #ff0081,
+        -110px 20px #ff0081, -130px 10px 0 2px #ff0081, -120px 0px 0 3px #ff0081,
+        -140px -10px #ff0081, -130px -20px 0 2px #ff0081, -135px -60px 0 3px #ff0081,
+
+        -50px 70px #ff0081, -50px 64px 0 2px #ff0081, -50px 80px 0 3px #ff0081,
+        -40px 59px #ff0081, -65px 70px 0 2px #ff0081, -70px 85px 0 3px #ff0081,
+        20px 75px #ff0081, 25px 80px 0 2px #ff0081, 30px 70px 0 3px #ff0081;
+    transition: .7s box-shadow;
+  }
+  .button:active.button::after {
+    transition: 0s;
+    box-shadow: 10px 10px #ff0081, 15px 0px 0 2px #ff0081, 20px 15px 0 3px #ff0081,
+        20px 10px #ff0081, 10px 5px 0 2px #ff0081, 10px 0px 0 3px #ff0081;
+  }
+  @keyframes granule{
+      0%{
+          box-shadow: none;
+      }
+      1%{
+        box-shadow: 40px 40px #ff0081, 45px 30px 0 2px #ff0081, 50px 55px 0 3px #ff0081;
+      }
+      100%{
+        box-shadow: 10px 10px #ff0081, 15px 0px 0 2px #ff0081, 20px 15px 0 3px #ff0081;
+      }
+  }
+  /* 方法2： */
+</style>
+</html>

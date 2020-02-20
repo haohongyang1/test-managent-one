@@ -4,13 +4,22 @@
 
 <head>
   <meta charset="utf-8">
-  <title>1111</title>
+  <title>11</title>
 </head>
 <body>
-  <iframe src="" frameborder="0"></iframe>
+  <!-- <iframe width="100%" height="100%" src="https://17343017-60.hd.faisco.cn/17343017/9kF5MKTR9InH-A2L_undUA/mbtp_new.html?appid=wx50775cad5d08d7ad" frameborder="0"></iframe> -->
+  <iframe id="ifr" width="100%" height="100%" src="https://17343017-60.hd.faisco.cn/17343017/9kF5MKTR9InH-A2L_undUA/mbtp_new.html?appid=wx50775cad5d08d7ad" frameborder="0"></iframe>
   <script>
+    window.addEventListener('message',function(rs){
+        console.log(rs.data);
+        document.querySelector("#title").innerHTML = rs.data;
+    })
+
     const FANCOURL = 'https://17343017-60.hd.faisco.cn/17343017/9kF5MKTR9InH-A2L_undUA/mbtp_new.html?appid=wx50775cad5d08d7ad'
+    let ifrWin = document.getElementsByTagName('iframe')[0].contentWindow
+    console.log(ifrWin.location.path)
     window.onload = function () {
+      alert(window.location.href)
       interceptURL()
       jumpToFanco()
     }
@@ -20,9 +29,10 @@
     }
     // 跳转
     function jumpToFanco () {
-      window.location.href = FANCOURL
+      // window.location.href = FANCOURL
     }
   </script>
   
 </body>
+
 </html>

@@ -12,7 +12,7 @@
 <script>
 /* 要求如下：
 有一颗二叉树定义如下：treeNode
-要求：定义一个方法TreeNodeNum，求二叉树所有根到叶子路径组成的组成的数字之和；
+要求：定义一个方法TreeNodeNum，求二叉树所有根到叶子value组成的组成的数字之和；
 输出示例：TreeNodeNum(treeNode) -> 19 -> 即(1+2+4)+(1+2+5)+(1+3)😜
 */
 var treeNode = {
@@ -36,10 +36,26 @@ var treeNode = {
         right: null
     }
 }
+// TODO 没根据叶子节点个数决定根节点的增加次数
 function TreeNodeNum(root) {
-    let nodeValueNum
+    let lVal=0,rVal=0
+    // 有左儿子节点
+    if (root.left) {
+        lVal = TreeNodeNum(root.left)
+        lVal+=root.value
+    }
+    // 有右儿子节点
+    if (root.right) {
+        rVal = TreeNodeNum(root.right)
+        rVal+=root.value
+    }
     // 到叶子节点为止
-    if (!root.left && !root.right) {}
+    if (!root.left && !root.right) {
+        return root.value
+    } else {
+        return lVal + rVal
+    }
 }
+console.log(TreeNodeNum(treeNode))
 </script>
 </html>

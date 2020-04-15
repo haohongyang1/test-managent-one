@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>progess进度条</title>
+    <style>
+        .progress{
+            width: 300px;
+            height: 20px;
+            border: none;
+            background-color:#d7d7d7;
+            border-radius: 1rem;
+            color:linear-gradient(to top left,red,green,blue,yellow,black,white);
+        }
+        .progress::-webkit-progress-bar{
+            background-color:#d7d7d7;
+            border-radius: 1rem;
+        }
+        progress::-webkit-progress-value{
+          background-image:linear-gradient(to left, rgba(255, 143, 143, 1), rgba(255, 106, 106, 1),rgba(252, 110, 69, 1));
+          border-radius: 1rem;
+        }
+        .progress::-moz-progress-bar{
+            border-radius: 1rem; 
+            background-color:linear-gradient(to left, rgba(255, 143, 143, 1), rgba(255, 106, 106, 1),rgba(252, 110, 69, 1));
+        }
+
+        .all {
+            width: 200px;
+            height: 15px;
+            border-radius: 7px;
+            background-color: #cdcdcd;
+            position: relative;
+        }
+        .unfinished {
+            width: 100px;
+            height: 15px;
+            position: absolute;
+            /* background-color: palevioletred; */
+            background-image: linear-gradient(to left, rgba(255, 143, 143, 1), rgba(255, 106, 106, 1),rgba(252, 110, 69, 1));
+            border-radius: 7px;
+        }
+    </style>    
+</head>
+<body>
+    <!-- <progress class="progress" value="80" max="100"></progress> -->
+    <!-- <div class="all">
+        <div class="unfinished"></div>
+    </div> -->
+
+    <div class="father">
+        <div class="son">
+            <div class="grand"></div>
+        </div>
+    </div>
+    <style>
+        .father{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 32px;
+        }
+        .son{
+            width: 100px;
+            height: 100px;
+            border-radius: 32px;
+            background-color: #000;
+        }
+        .grand{
+            width: 100px;
+            height: 100px;
+            border-radius: 32px;
+            background-color: #FFF;
+        }
+    </style>
+</body>
+</html>

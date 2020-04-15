@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>布局实践</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="left-left">left-left</div>
+      <div class="left-right">left-right</div>
+      <div class="right">right</div>
+    </div>
+  </body>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: row;
+      background: palegoldenrod;
+    }
+
+    .left-left {
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+
+    .left-right {
+      width: 100px;
+      height: 100px;
+      background: palegreen;
+    }
+
+    .right {
+      /* flex-grow: 1; */
+      margin-left: auto;
+      text-align: right;
+      width: 100px;
+      height: 100px;
+      background-color: purple;
+    }
+  </style>
+</html>

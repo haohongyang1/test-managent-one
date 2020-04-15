@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>雪碧图动画</title>
+  </head>
+  <body>
+    <div class="test"></div>
+    <style>
+      .test {
+        width: 131px;
+        height: 300px;
+        background-image: url("https://uploads.codesandbox.io/uploads/user/abc364e4-ea65-4398-a1dc-df2645675b64/U59a-lightbulb.png");
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: 1608px;
+        animation: test_anim 2.2s steps(12) infinite;
+      }
+      @keyframes test_anim {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: -1608px 0;
+        }
+      }
+    </style>
+  </body>
+</html>

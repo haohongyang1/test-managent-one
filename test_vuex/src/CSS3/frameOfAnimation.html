@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>帧动画</title>
+  </head>
+  <style>
+    html,
+    body,
+    div {
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      width: 640px;
+      height: 360px;
+      overflow: hidden;
+    }
+    .box {
+      width: 23040px;
+      height: 360px;
+      background-image: url("./css_sprites.png");
+      background-size: cover;
+      animation: yayaAnimation 3s steps(36) infinite;
+    }
+    @keyframes yayaAnimation {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-23040px, 0, 0);
+      }
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="box"></div>
+    </div>
+  </body>
+</html>

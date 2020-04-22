@@ -1,102 +1,103 @@
 // es5 call
-Function.prototype.call2 = function(context) {
-  var context = context || window
-  context.fn = this
-  let args = []
-  for(var i=1, len = arguments.length; i< len; i++) {
-    args.push('arguments[' + i + ']')
+Function.prototype.call2 = function (context) {
+  var context = context || window;
+  context.fn = this;
+  let args = [];
+  for (var i = 1, len = arguments.length; i < len; i++) {
+    args.push("arguments[" + i + "]");
   }
-  console.log(args)
-  var result = eval('context.fn(' + args +')')
-  delete context[fn]
-  return result
-}
+  console.log(args);
+  var result = eval("context.fn(" + args + ")");
+  delete context[fn];
+  return result;
+};
 
 // es6 call
-Function.prototype.newCall = function(context, ...args) {
-  context = context || window
-  let fn = Symbol()
-  context[fn] = this
-  let result = context[fn](...args)
-  delete context[fn]
-  return result
-}
-function a() {
-}
-a.newCall(null,1,2,3)
+Function.prototype.newCall = function (context, ...args) {
+  context = context || window;
+  let fn = Symbol();
+  context[fn] = this;
+  let result = context[fn](...args);
+  delete context[fn];
+  return result;
+};
+function a() {}
+a.newCall(null, 1, 2, 3);
 
 // es5 apply
-Function.prototype.apply2 = function(context) {
-  var context = context || window
-  context.fn = this
-  let args = arguments[1]
-  var result = eval('context.fn(' + args +')')
-  delete context.fn
-  return result
-}
+Function.prototype.apply2 = function (context) {
+  var context = context || window;
+  context.fn = this;
+  let args = arguments[1];
+  var result = eval("context.fn(" + args + ")");
+  delete context.fn;
+  return result;
+};
 
 // es6 apply
-Function.prototype.newApply = function(context, arr) {
-  context = context || window
-  let fn = Symbol()
-  context[fn] = this
-  let result = context[fn](...arr)
-  delete context[fn]
-  return result
-}
+Function.prototype.newApply = function (context, arr) {
+  context = context || window;
+  let fn = Symbol();
+  context[fn] = this;
+  let result = context[fn](...arr);
+  delete context[fn];
+  return result;
+};
 
 function bar(name, age, a, b, c) {
-  console.log(name, age, a, b, c)
+  console.log(name, age, a, b, c);
 }
 
 // es5 bind
-Function.prototype.bind2 = function(context) {
-  if(typeof this !== 'function') {
-    return
+Function.prototype.bind2 = function (context) {
+  if (typeof this !== "function") {
+    return;
   }
-  var args = Array.prototype.slice.call(arguments, 1),
-      fToBind = this,
-      fNOP = function() {},
-      fBound = function() {
-        fToBind.apply(this instanceof fNOP ? this : context, args.concat(Array.prototype.slice.call(arguments)))
-      }
-  if(this.prototype) {
-    fNOP.prototype = this.prototype
+  var args = Array.prototype.slice.call(arguments, 1), // slice 从已有数组中返回选定元素
+    fToBind = this,
+    fNOP = function () {},
+    fBound = function () {
+      fToBind.apply(
+        this instanceof fNOP ? this : context,
+        args.concat(Array.prototype.slice.call(arguments))
+      );
+    };
+  if (this.prototype) {
+    fNOP.prototype = this.prototype;
   }
-  fBound.prototype = new fNOP()
-  return fBound
-}
+  fBound.prototype = new fNOP();
+  return fBound;
+};
 // es6 bind
-Function.prototype.newBind = function(context, ...args1) {
-  let _this = this
+Function.prototype.newBind = function (context, ...args1) {
+  let _this = this;
   return (...args2) => {
-    return _this.apply(context, [...args1, ...args2])
-  }
-}
+    return _this.apply(context, [...args1, ...args2]);
+  };
+};
 
 var c = {
-  value: 2
-}
+  value: 2,
+};
 var b = {
-  value: 3
-}
+  value: 3,
+};
 // bar.newApply(c, [1, 2])
-bar.newBind(c, 1, 2, 3)(3,3,4)
+bar.newBind(c, 1, 2, 3)(3, 3, 4);
 
 //////////////////////////////////////////////////////////////////
-  ///////////////////////////// 原理 ///////////////////////
+///////////////////////////// 原理 ///////////////////////
 /////////////////////////////////////////////////////////////
 // apply第一个参数的值
 function test() {
-  console.log(this)
+  console.log(this);
 }
-test.apply(1) // 1
-test.apply('a') // 'a'
-test.apply({}) // {}
-test.apply(null) // window
-test.apply(undefined) // window
-test.apply(function(){}) // f() {}
-
+test.apply(1); // 1
+test.apply("a"); // 'a'
+test.apply({}); // {}
+test.apply(null); // window
+test.apply(undefined); // window
+test.apply(function () {}); // f() {}
 
 // bar.call2(foo)
 
@@ -104,16 +105,33 @@ test.apply(function(){}) // f() {}
 function fruits() {}
 
 fruits.prototype = {
-    color: "red",
-    value: 2,
-    say: function() {
-      console.log("My color is " + this.color);
-      console.log(this.value)
-    }
-}
+  color: "red",
+  value: 2,
+  say: function () {
+    console.log("My color is " + this.color);
+    console.log(this.value);
+  },
+};
 
-var apple = new fruits;
-banana = {
-    color: "yellow"
+function myCall(context, ...args) {
+  context = context || window;
+  let fn = Symbol();
+  context[fn] = this;
+  let result = context[fn](...args);
+  delete context[fn];
+  return result;
 }
-// apple.say.call(banana);
+function myApply(context, ...args) {
+  context = context || window;
+  let fn = Symbol();
+  context[fn] = this;
+  let result = context[fn]([...args]);
+  delete context[fn];
+  return result;
+}
+function myBind(fn, ...args1) {
+  let _this = this;
+  return function (...args2) {
+    return myApply(_this, [...args1, ...args2]);
+  };
+}

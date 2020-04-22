@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>平行四边形</title>
+  </head>
+  <style>
+    /* 宽高50*50 */
+    div {
+      padding: 0;
+      width: 100px;
+      height: 50px;
+      background: green;
+      margin: 100px auto;
+      position: relative;
+    }
+    div::before {
+      position: absolute;
+      right: -69.65px;
+      /* 长方形高度 */
+      top: -50px;
+      content: "";
+      /* 已知斜边50px，border另外两边的高度50的平方除以2开根号 */
+      border: 35.35555555px solid transparent;
+      border-right-color: black;
+      transform: rotate(45deg);
+      box-sizing: border-box;
+      /* 以左上角为中心旋转45度 */
+      transform-origin: 0 0;
+    }
+  </style>
+  <body>
+    <div></div>
+  </body>
+</html>

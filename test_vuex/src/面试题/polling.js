@@ -31,11 +31,7 @@ function test(n) {
     }, 2000);
   });
 }
-pollingTest(
-  test,
-  3000,
-  4,
-  0
-)(1).then((res) => {
+let res = pollingTest(test, 3000, 4, 1)(1);
+res.then((res1) => {
   console.log(res);
 });

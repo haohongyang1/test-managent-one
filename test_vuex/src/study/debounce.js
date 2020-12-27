@@ -49,3 +49,4 @@ let f = trottle(test, 3000, true);
 setInterval(function () {
   f(11);
 }, 100);
+

@@ -24,23 +24,7 @@ function deepClone(target, map = new WeakMap()) {
     return target;
   }
 }
-function deepClone1(target, map = new WeakMap()) {
-  if (typeof target === "object") {
-    let res = Array.isArray(target) ? [] : {};
-    if (map.get(target)) {
-      return map.get(target);
-    }
-    map.set(target);
-    let keys = Object.keys(target),
-      i = -1;
-    while (++i < keys.length) {
-      res[keys[i]] = deepClone(target[keys[i]]);
-    }
-    return res;
-  } else {
-    return target;
-  }
-}
+
 const target = {
   field1: Symbol(1),
   field2: undefined,

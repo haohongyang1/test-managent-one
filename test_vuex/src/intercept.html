@@ -1,38 +1,32 @@
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-  <meta charset="utf-8">
-  <title>11</title>
-</head>
-<body>
-  <!-- <iframe width="100%" height="100%" src="https://17343017-60.hd.faisco.cn/17343017/9kF5MKTR9InH-A2L_undUA/mbtp_new.html?appid=wx50775cad5d08d7ad" frameborder="0"></iframe> -->
-  <iframe id="ifr" width="100%" height="100%" src="https://17343017-60.hd.faisco.cn/17343017/9kF5MKTR9InH-A2L_undUA/mbtp_new.html?appid=wx50775cad5d08d7ad" frameborder="0"></iframe>
-  <script>
-    window.addEventListener('message',function(rs){
-        console.log(rs.data);
-        document.querySelector("#title").innerHTML = rs.data;
-    })
-
-    const FANCOURL = 'https://17343017-60.hd.faisco.cn/17343017/9kF5MKTR9InH-A2L_undUA/mbtp_new.html?appid=wx50775cad5d08d7ad'
-    let ifrWin = document.getElementsByTagName('iframe')[0].contentWindow
-    console.log(ifrWin.location.path)
-    window.onload = function () {
-      alert(window.location.href)
-      interceptURL()
-      jumpToFanco()
-    }
-    // 拦截URL
-    function interceptURL () {
-      // 监听当前URLchange事件
-    }
-    // 跳转
-    function jumpToFanco () {
-      // window.location.href = FANCOURL
-    }
-  </script>
-  
-</body>
-
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="copy-txt">
+      前方高能预警，朋友圈文案在这里哦：**放大招，一分坐公交，还能领红包！
+    </div>
+    <button onclick="copyTXT()">复制</button>
+    <script>
+      function copyTXT() {
+        var copyDOM = document.querySelector("#copy-txt"); //指定的DOM元素
+        console.log(copyDOM);
+        var range = document.createRange(); // 创建容器
+        console.log(range);
+        range.selectNode(copyDOM); // 选中需要复制的节点
+        window.getSelection().addRange(range); // 执行选中元素
+        var successful = document.execCommand("copy"); // 执行 copy 操作
+        try {
+          var msg = successful ? "successful" : "unsuccessful";
+          console.log("Copy was " + msg);
+        } catch (err) {
+          console.log("unable to copy");
+        }
+        window.getSelection().removeAllRanges(); // 移除选中的元素
+      }
+    </script>
+  </body>
 </html>

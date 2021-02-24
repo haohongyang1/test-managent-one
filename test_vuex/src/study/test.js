@@ -1,28 +1,52 @@
-class Node {
-  string id;
-  string value;
-  [] children
-
-  constructor(id, value, children) {}
-}
-
-/**
- * 就是用一个map来缓存node，然后pop每一个node用parentId去匹配，然后在children里把自己push进去，不过这个前提是input得有顺序，我刚刚想了一下，得有顺序，比如按照id排序，不然左右孩子节点怎么区分呢
- * @param {*} input 
- */
-function fn(input) {
-  let rootNode;
-  let nodeMap = {}
-  while(input.length > 0) {
-    let cur = input.shift();
-    let curNode = new Node(cur.id, cur.value, [])
-    nodeMap[cur.id] = curNode
-    if (!cur.parentId) {
-      rootNode = curNode
-      nodeMap['root'] = rootNode
-    } else {
-      nodeMap[cur.parentId].children.push(curNode)
+class myPromise {
+  // 变量私有
+  constructor(exe) {
+    this.status = "pending";
+    this.value = "";
+    this.reason = "";
+    this.onResolveCallback = [];
+    this.onRejectCallback = [];
+    exe(this._resolve, this._reject);
+  }
+  then(fn) {
+    if (this.status === "pending") {
+      this.onResolveCallback.push(fn);
+    }
+    if (this.status === "resolved") {
+      this.onRejectCallback.forEach((cb) => cb());
     }
   }
-  return rootNode
+  _resolve(value) {
+    if (this.status === "pending") {
+      this.status = "resolved";
+      this.onResolveCallback.push(cb);
+    }
+  }
+  _reject() {}
+}
+
+function Person(fn, arg) {
+  let r = Object.create(fn);
+  r.prototype = Person;
+  return r;
+}
+
+
+function Parent (name) {
+    this.name = name
+    this.color = ['red','color']
+}
+Parent.prototype.getName = function () {console.log(this.name)}
+function Child(name, age) {
+    Parent.call(this, name) // 这叫做借用构造函数，直接把构造函数this的调用都指向父亲，实现了继承可以在child中向父传递参数
+    this.age = age
+}
+Child.prototype = new Parent()
+Child.prototype.constructor = Child // 保留自己的属性
+
+// 原型式继承
+function createObj (o) {
+    function F() {}
+    F.prototype = o
+    return new F()
 }

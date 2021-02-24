@@ -44,6 +44,7 @@ const output = {
     ]
 }
  */
+// 实现重点：一步步把自己做为自己的儿子节点往里添加；如果是无序，先排序再添加
 function Node(id, value, children = []) {
   return { id, value, children };
 }

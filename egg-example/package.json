@@ -1,0 +1,27 @@
+{
+  "name": "egg-example",
+  "version": "1.0.0",
+  "description": "This is description",
+  "main": "index.js",
+  "scripts": {
+    "dev": "egg-bin dev",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "haohongyang1"
+  },
+  "keywords": [
+    "This",
+    "is",
+    "keywords"
+  ],
+  "author": "haohongyang",
+  "license": "ISC",
+  "dependencies": {
+    "egg": "^2.29.3"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.15.0"
+  }
+}

@@ -1,0 +1,10 @@
+2021-03-16 11:09:44,654 INFO 13080 [egg:logger] init all loggers with options: {"dir":"/Users/haohongyang/Documents/project/test-managent-one/egg-example/logs/egg-example","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"egg-example-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"agent"}
+2021-03-16 11:09:44,660 INFO 13080 [egg:core] dump config after load, 2ms
+2021-03-16 11:09:44,687 INFO 13080 [egg-watcher] Start watching: ["/Users/haohongyang/Documents/project/test-managent-one/egg-example/app","/Users/haohongyang/Documents/project/test-managent-one/egg-example/config","/Users/haohongyang/Documents/project/test-managent-one/egg-example/mocks","/Users/haohongyang/Documents/project/test-managent-one/egg-example/mocks_proxy","/Users/haohongyang/Documents/project/test-managent-one/egg-example/app.js"]
+2021-03-16 11:09:44,687 INFO 13080 [egg-watcher] Start watching: "/Users/haohongyang/Documents/project/test-managent-one/egg-example/app"
+2021-03-16 11:09:44,687 INFO 13080 [egg-watcher] Start watching: "/Users/haohongyang/Documents/project/test-managent-one/egg-example/config"
+2021-03-16 11:09:44,687 INFO 13080 [egg-watcher] Start watching: "/Users/haohongyang/Documents/project/test-managent-one/egg-example/mocks"
+2021-03-16 11:09:44,687 INFO 13080 [egg-watcher] Start watching: "/Users/haohongyang/Documents/project/test-managent-one/egg-example/mocks_proxy"
+2021-03-16 11:09:44,687 INFO 13080 [egg-watcher] Start watching: "/Users/haohongyang/Documents/project/test-managent-one/egg-example/app.js"
+2021-03-16 11:09:44,687 INFO 13080 [egg-watcher:agent] watcher start success
+2021-03-16 11:09:44,691 INFO 13080 [egg:core] dump config after ready, 2ms

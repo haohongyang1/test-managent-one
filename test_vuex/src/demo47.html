@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>监听localStorage</title>
+  </head>
+
+  <body>
+    <style>
+      #classB {
+        color: red;
+      }
+      .classA {
+        color: blue;
+      }
+    </style>
+    <p class="classA" id="classB">123</p>
+    <script>
+      // 为了解决不同页面之间storage变化的同步
+
+      window.addEventListener("storage", function (e) {
+        console.log(e.newValue);
+      });
+
+      //   为了解决在当前页面通过setItem更改storage的值同步变化
+
+      var orignalSetItem = localStorage.setItem;
+      localStorage.setItem = function (key, newValue) {
+        var setItemEvent = new Event("setItemEvent");
+        setItemEvent.newValue = newValue;
+        window.dispatchEvent(setItemEvent);
+        orignalSetItem.apply(this, arguments);
+      };
+      window.addEventListener("setItemEvent", function (e) {
+        console.log(e.newValue);
+      });
+      localStorage.setItem("name", "wang");
+    </script>
+  </body>
+</html>

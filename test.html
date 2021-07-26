@@ -1,0 +1,39 @@
+<body>
+    
+</body>
+<script>
+    const Alert = (text, title) => {
+        try {
+            const body = document.body;
+            const frag = document.createDocumentFragment();
+            const msg = document.createElement('div');
+            const msgMask = document.createElement('div');
+            const msgContainer = document.createElement('div');
+            const msgTitle = document.createElement('div');
+            const msgText = document.createElement('div');
+            const msgBtn = document.createElement('div');
+            msgContainer.appendChild(msgTitle);
+            msgContainer.appendChild(msgText);
+            msgContainer.appendChild(msgBtn);
+            msg.appendChild(msgMask);
+            msg.appendChild(msgContainer);
+            frag.appendChild(msg);
+            body.appendChild(frag);
+            msgMask.style = 'position: fixed; left: 0; right: 0; top:0; bottom: 0; height: 100%; z-index: 10000; background-color: rgba(0,0,0,0.45); text-align: center';
+            msgContainer.style = 'width: 50vw; background-color: #fff; font-size: 5vw; z-index: 10001; position: absolute; left: 50%; top: 50%;transform: translate3d(-50%, -50%, 0); border-radius: 1vw; color:#888';
+            msgTitle.style = 'height: 8vw; line-height: 8vw; padding-left: 2vw; text-align: left';
+            msgText.style = 'padding: 4vw 0 0 2vw; border-top: 1px solid #d9d9d9; border-bottom: 1px solid #d9d9d9; font-size: 4vw; min-height: 12vw; overflow: hidden;word-wrap:break-word;word-break:break-all; text-align: center'
+            msgBtn.style = 'border: 1px solid #d9d9d9; font-size: 4vw; height: 6vw; line-height: 6vw; width: 12vw; text-align: center; margin: 1vw 0 1vw 34vw; border-radius: 1vw; color: rgba(0, 0, 0, 0.85); cursor: pointer;';
+            msgBtn.innerHTML = '确认';
+            msgTitle.innerHTML = title || '提示';
+            msgText.innerHTML = text;
+            msgBtn.onclick = () => {
+                body.removeChild(msg);
+            }
+        } catch (e) {
+            alert(text)
+        }
+    }
+    Alert('测试');
+    Alert('111');
+</script>

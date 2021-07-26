@@ -1,0 +1,6 @@
+2021-03-16 11:09:45,261 INFO 13080 [Timer] /Users/haohongyang/Documents/project/test-managent-one/egg-example/node_modules/egg-multipart/app/schedule/clean_tmpdir.js next time will execute after 62414741ms at 2021-03-17 04:30:00.002
+2021-03-16 11:09:45,261 INFO 13080 [Timer] /Users/haohongyang/Documents/project/test-managent-one/egg-example/node_modules/egg-logrotator/app/schedule/clean_log.js next time will execute after 46214739ms at 2021-03-17 00:00:00.000
+2021-03-16 11:09:45,262 INFO 13080 [Timer] /Users/haohongyang/Documents/project/test-managent-one/egg-example/node_modules/egg-logrotator/app/schedule/rotate_by_file.js next time will execute after 46215739ms at 2021-03-17 00:00:01.001
+2021-03-16 11:09:45,180 INFO 13081 [egg-schedule]: register schedule /Users/haohongyang/Documents/project/test-managent-one/egg-example/node_modules/egg-multipart/app/schedule/clean_tmpdir.js
+2021-03-16 11:09:45,180 INFO 13081 [egg-schedule]: register schedule /Users/haohongyang/Documents/project/test-managent-one/egg-example/node_modules/egg-logrotator/app/schedule/clean_log.js
+2021-03-16 11:09:45,180 INFO 13081 [egg-schedule]: register schedule /Users/haohongyang/Documents/project/test-managent-one/egg-example/node_modules/egg-logrotator/app/schedule/rotate_by_file.js

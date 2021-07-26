@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>实现render</title>
+  </head>
+
+  <body>
+    <style>
+      #classB {
+        color: red;
+      }
+      .classA {
+        color: blue;
+      }
+    </style>
+    <p class="classA" id="classB">123</p>
+    <script>
+      let template = `<div>
+        <span>{data.a}</span>
+        <span>{data.b.c}</span>
+      </div>`;
+      function render(template, data) {
+        // 要求：补充函数体
+        return template.replace(/\{.+\}/g, (str) => eval(str));
+      }
+      // 测试的数据为
+      const data = {
+        a: 1,
+        b: {
+          c: "kwai",
+        },
+      };
+      //   document.write(render(template, data));
+    </script>
+  </body>
+</html>

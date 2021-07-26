@@ -12,3 +12,4 @@ function helper(cache, n) {
   cache[n] = helper(cache, n - 1) + helper(cache, n - 2);
   return cache[n];
 }
+console.log(fibOptimize(3))
